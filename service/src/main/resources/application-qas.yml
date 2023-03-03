@@ -1,0 +1,183 @@
+dbschema: hcm_sd_service
+applicationName: hcm_sd_service
+DB_HOST: 172.16.101.43
+DB_URL: jdbc:postgresql://172.16.101.43:5432/nspace?stringtype=unspecified
+DB_USERNAME: xdp
+DB_PASSWORD: gjEyCJRruMz28kw96OWXy5JBN9pOROXT
+KAFKA_URL: 172.16.101.37:9092
+REDIS_CONFIG: '{"singleServerConfig":{"tcpNoDelay":true,"idleConnectionTimeout":10000,"connectTimeout":10000,"timeout":3000,"retryAttempts":3,"retryInterval":1500,"password":null,"subscriptionsPerConnection":100,"clientName":hcm-sd-service,"address":${REDIS_URL},"subscriptionConnectionMinimumIdleSize":1,"subscriptionConnectionPoolSize":50,"connectionMinimumIdleSize":10,"connectionPoolSize":64,"database":2,"dnsMonitoringInterval":5000},"threads":2,"nettyThreads":2}'
+REDIS_HOST: 172.16.101.37
+REDIS_PORT: 6379
+REDIS_URL: redis://172.16.101.37:6379
+API_KEY: qas
+ANSI_STATUS: never
+ROUTE_CONTEXT: https://qas-api.xdp.vn/xdp
+#ROUTE_CONTEXT: http://dev-api.xdp.vn/xdp
+DATE_FORMAT: yyyy-MM-dd'T'HH:mm:ssZ
+TZ: Asia/Ho_Chi_Minh
+
+server:
+  port: 8097
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  shutdown: graceful
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: ${DATE_FORMAT}
+    time-zone: ${TZ}
+  application:
+    name: hcm-generic
+  output:
+    ansi:
+      enabled: never
+  messages:
+    basename: language/message
+    encoding: UTF-8
+    cache-duration: -1
+    jpa:
+      open-in-view: false
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          default_schema: hcm_sd_service
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: hcm_sd_service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  flyway:
+    schemas:
+      - hcm_sd_service
+    enabled: false
+  kafka:
+    bootstrap-servers: ${KAFKA_URL}
+    group: hcm_sd_service
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+eventuatelocal:
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_URL}
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: prometheus, health
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoint:
+    health:
+      enabled: true
+      show-components: always
+    prometheus:
+      enabled: true
+logging:
+  level:
+    io.eventuate: debug
+    io.eventuate.tram: trace
+    org.springframework.orm.jpa: trace
+    org.hibernate.SQL: debug
+    org.springframework.jdbc.core: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+cache:
+  expries: 5
+  expireAfter: write
+nspace:
+  token: 1
+  policy: false
+  cache:
+    config: ${REDIS_CONFIG}
+    expires: 0
+    expireAfter: write
+  application: hcm_sd_service
+  hcm_sd_topic : hcm_sd_service_local
+  service:
+    task:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"0"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/task
+      cache:
+        expires: 5
+        expiresAfter: write
+    storage:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/storage
+    signature:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/signature
+    notice:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/notice
+    config:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/config
+      cache:
+        expires: 5
+        expiresAfter: write
+    md:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/md
+      cache:
+        expires: 5
+        expiresAfter: write
+    user:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/account
+      cache:
+        expires: 5
+        expiresAfter: write
+    event:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/event
+    person:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/person
+      cache:
+        expires: 5
+        expiresAfter: write
+    request:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      url: ${ROUTE_CONTEXT}/wf/request
+    hcm-time:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/hcm/time
+      #URL: http://localhost:8093
+    system:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      url: ${ROUTE_CONTEXT}/system
+      cache:
+        expires: 5
+        expiresAfter: write
+    hcm:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/hcm/generic
+      #URL: http://localhost:8087

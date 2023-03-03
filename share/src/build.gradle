@@ -1,0 +1,47 @@
+version '0.0.1'
+
+dependencies {
+    implementation 'com.xdp:ns-lib'
+    implementation "com.xdp:ns-utils"
+    implementation "org.hibernate:hibernate-envers"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "com.vladmihalcea:hibernate-types-52"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.12.3"
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "jakarta.validation:jakarta.validation-api"
+    implementation("org.springframework.boot:spring-boot-starter-undertow")
+    // api "com.xdp.erp:gl-share"
+
+    runtimeOnly "org.postgresql:postgresql"
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.xdp.erp'
+            artifactId = 'ar-share'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+        }
+
+    }
+    repositories {
+        maven {
+            url "http://oss.xdp.vn/repository/maven-releases/"
+            allowInsecureProtocol = true
+            credentials {
+                username  'ndu6'
+                password 'Nzp5ekwXTScGdVKThTNgL44DnUJnUNez'
+            }
+
+        }
+    }
+}

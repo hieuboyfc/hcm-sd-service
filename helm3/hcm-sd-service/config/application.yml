@@ -1,0 +1,163 @@
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+  shutdown: graceful
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: ${DATE_FORMAT}
+    time-zone: ${TZ}
+  application:
+    name: hcm-sd
+  output:
+    ansi:
+      enabled: never
+  messages:
+    basename: language/message
+    encoding: UTF-8
+    cache-duration: -1
+    jpa:
+      open-in-view: false
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+          default_schema: hcm_sd_service
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: hcm_sd_service
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  flyway:
+    schemas:
+      - hcm_sd_service
+    enabled: false
+  kafka:
+    bootstrap-servers: ${KAFKA_URL}
+    group: hcm_sd_service
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+eventuatelocal:
+  zookeeper:
+    connection:
+      string: ${ZOOKEEPER_URL}
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: prometheus, health
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoint:
+    health:
+      enabled: true
+      show-components: always
+    prometheus:
+      enabled: true
+logging:
+  level:
+    io.eventuate: debug
+    io.eventuate.tram: trace
+    org.springframework.orm.jpa: trace
+    org.hibernate.SQL: debug
+    org.springframework.jdbc.core: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+cache:
+  expries: 5
+  expireAfter: write
+nspace:
+  token: 1
+  policy: false
+  cache:
+    config: ${REDIS_CONFIG}
+    expires: 0
+    expireAfter: write
+  application: hcm_sd_service
+  hcm_payroll_topic : hcm_sd_service
+  service:
+    task:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"0"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/task
+      cache:
+        expires: 5
+        expiresAfter: write
+    storage:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/storage
+    signature:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/signature
+    notice:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/notice
+    config:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/config
+      cache:
+        expires: 5
+        expiresAfter: write
+    md:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/md
+      cache:
+        expires: 5
+        expiresAfter: write
+    user:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/account
+      cache:
+        expires: 5
+        expiresAfter: write
+    event:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/event
+    person:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/person
+      cache:
+        expires: 5
+        expiresAfter: write
+    request:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      url: ${ROUTE_CONTEXT}/wf/request
+    hcm-time:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/hcm/time
+    hcm:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/hcm/generic
+    system:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      url: ${ROUTE_CONTEXT}/system
+      cache:
+        expires: 5
+        expiresAfter: write

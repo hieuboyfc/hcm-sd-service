@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  labels:
+    {{- include "labels" . | nindent 6 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "labels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Values.appName }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.container.image.repository }}:{{ .Values.container.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.container.image.pullPolicy }}
+          ports:
+            - name: {{ .Values.service.name }}
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: generic-config
+            - secretRef:
+                name: db
+          {{- with .Values.container.livenessProbe }}
+          livenessProbe:
+          {{- tpl . $ | nindent 12 }}
+          {{- end }}
+          {{- with .Values.container.readinessProbe }}
+          readinessProbe:
+          {{- tpl . $ | nindent 12 }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.container.resources | nindent 12 }}
+          {{- if .Values.configMap.files.application.enable }}
+          volumeMounts:
+            - name: {{.Values.configMap.files.application.name}}
+              mountPath: {{.Values.configMap.files.application.mountPath}}
+              readOnly: true
+              subPath: {{.Values.configMap.files.application.subPath}}
+          {{- end }}
+      {{- if .Values.configMap.files.application.enable }}
+      volumes:
+        - name: {{.Values.configMap.files.application.name}}
+          configMap:
+            defaultMode: 0644
+            name: {{.Values.configMap.files.application.name}}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app.xdp.vn/name
+                      operator: In
+                      values:
+                        - {{ .Values.appName }}
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

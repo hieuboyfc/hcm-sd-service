@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: generic-config
+  namespace: {{.Values.namespace }}
+data:
+  DB_HOST: {{ .Values.database.address }}
+  DB_URL: jdbc:postgresql://{{ .Values.database.address }}:{{ .Values.database.port }}/{{.Values.database.name}}?stringtype=unspecified
+  REDIS_CONFIG: '{"singleServerConfig":{"tcpNoDelay":true,"idleConnectionTimeout":10000,"connectTimeout":10000,"timeout":3000,"retryAttempts":3,"retryInterval":1500,"password":null,"subscriptionsPerConnection":100,"clientName":{{ .Values.appName }},"address":${REDIS_URL},"subscriptionConnectionMinimumIdleSize":1,"subscriptionConnectionPoolSize":50,"connectionMinimumIdleSize":10,"connectionPoolSize":64,"database":2,"dnsMonitoringInterval":5000},"threads":2,"nettyThreads":2}'
+  REDIS_HOST: {{.Values.redis.host }}
+  REDIS_PORT: {{ .Values.redis.port |quote }}
+  REDIS_URL: redis://{{ .Values.redis.host }}:{{ .Values.redis.port }}
+  ROUTE_CONTEXT: http://api.gateway.svc.cluster.local:8082/xdp
+  SPRING_CONFIG_LOCATION: {{ .Values.config.location }}
+  DATE_FORMAT: {{ .Values.dateFormat }}
+  TZ: {{.Values.timezone}}
+  ZOOKEEPER_URL: {{.Values.queue.zookeeper}}
+  KAFKA_URL: {{.Values.queue.kafka}}

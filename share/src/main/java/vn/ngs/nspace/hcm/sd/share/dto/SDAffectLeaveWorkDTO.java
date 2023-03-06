@@ -1,4 +1,4 @@
-package vn.ngs.nspace.hcm.sd.share.dto.category;
+package vn.ngs.nspace.hcm.sd.share.dto;
 
 import lombok.*;
 

@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import vn.ngs.nspace.hcm.sd.entities.category.SDFutureLeader;
+import vn.ngs.nspace.hcm.sd.entities.SDFutureLeader;
 import vn.ngs.nspace.hcm.sd.repository.SDFutureLeaderRepo;
 import vn.ngs.nspace.hcm.sd.service.SDFutureLeaderService;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDFutureLeaderDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDFutureLeaderDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +88,9 @@ public class SDFutureLeaderServiceImpl implements SDFutureLeaderService {
         if (entityOptional.isPresent()) {
             SDFutureLeader entity = entityOptional.get();
             return SDFutureLeader.toDTO(entity);
+        } else {
+            throw new BusinessException("sd-future-leader-not-found");
         }
-        return null;
     }
 
     private SDFutureLeader validateInput(Long cid, String uid, SDFutureLeaderDTO dto, Boolean isEdit, String type) {

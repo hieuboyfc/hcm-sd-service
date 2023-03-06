@@ -1,4 +1,4 @@
-package vn.ngs.nspace.hcm.sd.share.dto.category;
+package vn.ngs.nspace.hcm.sd.share.dto;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class SDRiskLeaveWorkDTO {
+public class SDFutureLeaderDTO {
 
     private Long id;
     private String code;

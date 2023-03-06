@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.ngs.nspace.hcm.sd.service.SDReasonLeaveService;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDReasonLeaveDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDReasonLeaveDTO;
 
 import java.util.List;
 

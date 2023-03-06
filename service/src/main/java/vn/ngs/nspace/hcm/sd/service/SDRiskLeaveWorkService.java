@@ -2,7 +2,7 @@ package vn.ngs.nspace.hcm.sd.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDRiskLeaveWorkDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDRiskLeaveWorkDTO;
 
 import java.util.List;
 

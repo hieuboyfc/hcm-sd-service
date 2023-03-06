@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import vn.ngs.nspace.hcm.sd.entities.category.SDRiskLeaveWork;
+import vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork;
 import vn.ngs.nspace.hcm.sd.repository.SDRiskLeaveWorkRepo;
 import vn.ngs.nspace.hcm.sd.service.SDRiskLeaveWorkService;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDRiskLeaveWorkDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDRiskLeaveWorkDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +88,9 @@ public class SDRiskLeaveWorkServiceImpl implements SDRiskLeaveWorkService {
         if (entityOptional.isPresent()) {
             SDRiskLeaveWork entity = entityOptional.get();
             return SDRiskLeaveWork.toDTO(entity);
+        } else {
+            throw new BusinessException("sd-risk-leave-work-not-found");
         }
-        return null;
     }
 
     private SDRiskLeaveWork validateInput(Long cid, String uid, SDRiskLeaveWorkDTO dto, Boolean isEdit, String type) {

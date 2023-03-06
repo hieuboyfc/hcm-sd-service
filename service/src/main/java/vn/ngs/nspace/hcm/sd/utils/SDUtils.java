@@ -10,6 +10,7 @@ public class SDUtils {
     public static final String SD_AFFECT_LEAVE_WORK = "sd_affect_leave_work";
     public static final String SD_REASON_LEAVE = "sd_reason_leave";
     public static final String SD_FUTURE_LEADER = "sd_future_leader";
+    public static final String SD_HEIR_SETTING = "sd_heir_setting";
 
     public static final String RATE_EE = "Rate_ee";
     public static final String RATE_POS = "Rate_pos";

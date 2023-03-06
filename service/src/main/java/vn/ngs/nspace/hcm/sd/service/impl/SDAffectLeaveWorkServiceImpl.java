@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import vn.ngs.nspace.hcm.sd.entities.category.SDAffectLeaveWork;
+import vn.ngs.nspace.hcm.sd.entities.SDAffectLeaveWork;
 import vn.ngs.nspace.hcm.sd.repository.SDAffectLeaveWorkRepo;
 import vn.ngs.nspace.hcm.sd.service.SDAffectLeaveWorkService;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDAffectLeaveWorkDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDAffectLeaveWorkDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +88,9 @@ public class SDAffectLeaveWorkServiceImpl implements SDAffectLeaveWorkService {
         if (entityOptional.isPresent()) {
             SDAffectLeaveWork entity = entityOptional.get();
             return SDAffectLeaveWork.toDTO(entity);
+        } else {
+            throw new BusinessException("sd-affect-leave-work-not-found");
         }
-        return null;
     }
 
     private SDAffectLeaveWork validateInput(Long cid, String uid, SDAffectLeaveWorkDTO dto, Boolean isEdit, String type) {

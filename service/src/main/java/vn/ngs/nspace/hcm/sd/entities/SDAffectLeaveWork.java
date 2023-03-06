@@ -1,10 +1,10 @@
-package vn.ngs.nspace.hcm.sd.entities.category;
+package vn.ngs.nspace.hcm.sd.entities;
 
 import com.xdp.lib.models.PersistableEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDFutureLeaderDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDAffectLeaveWorkDTO;
 import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
 import javax.persistence.*;
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(
-        name = SDUtils.SD_FUTURE_LEADER,
-        indexes = {@Index(name = "SDFutureLeader_idx", columnList = "companyId")}
+        name = SDUtils.SD_AFFECT_LEAVE_WORK,
+        indexes = {@Index(name = "SDAffectLeaveWork_idx", columnList = "companyId")}
 )
-// Bảng: Lãnh đạo tương lai
-public class SDFutureLeader extends PersistableEntity<Long> {
+// Bảng: Ảnh hưởng nghỉ việc
+public class SDAffectLeaveWork extends PersistableEntity<Long> {
 
     @Id
     @GenericGenerator(name = "id", strategy = "com.xdp.lib.generator.SnowflakeId")
@@ -45,8 +45,8 @@ public class SDFutureLeader extends PersistableEntity<Long> {
     @Column(length = 20)
     private String color;
 
-    public static SDFutureLeader of(Long cid, String uid, SDFutureLeaderDTO dto) {
-        return SDFutureLeader.builder()
+    public static SDAffectLeaveWork of(Long cid, String uid, SDAffectLeaveWorkDTO dto) {
+        return SDAffectLeaveWork.builder()
                 .code(dto.getCode().toUpperCase())
                 .name(dto.getName())
                 .description(dto.getDescription())
@@ -57,8 +57,8 @@ public class SDFutureLeader extends PersistableEntity<Long> {
                 .build();
     }
 
-    public static SDFutureLeaderDTO toDTO(SDFutureLeader entity) {
-        return SDFutureLeaderDTO.builder()
+    public static SDAffectLeaveWorkDTO toDTO(SDAffectLeaveWork entity) {
+        return SDAffectLeaveWorkDTO.builder()
                 .id(entity.getId())
                 .code(entity.getCode().toUpperCase())
                 .name(entity.getName())
@@ -75,8 +75,8 @@ public class SDFutureLeader extends PersistableEntity<Long> {
                 .build();
     }
 
-    public static List<SDFutureLeaderDTO> toDTOs(List<SDFutureLeader> list) {
-        return list.stream().map(SDFutureLeader::toDTO).collect(Collectors.toList());
+    public static List<SDAffectLeaveWorkDTO> toDTOs(List<SDAffectLeaveWork> list) {
+        return list.stream().map(SDAffectLeaveWork::toDTO).collect(Collectors.toList());
     }
 
 }

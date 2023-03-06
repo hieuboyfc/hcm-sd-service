@@ -1,10 +1,10 @@
-package vn.ngs.nspace.hcm.sd.entities.category;
+package vn.ngs.nspace.hcm.sd.entities;
 
 import com.xdp.lib.models.PersistableEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDReasonLeaveDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDFutureLeaderDTO;
 import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
 import javax.persistence.*;
@@ -19,11 +19,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Table(
-        name = SDUtils.SD_REASON_LEAVE,
-        indexes = {@Index(name = "SDReasonLeave_idx", columnList = "companyId")}
+        name = SDUtils.SD_FUTURE_LEADER,
+        indexes = {@Index(name = "SDFutureLeader_idx", columnList = "companyId")}
 )
-// Bảng: Lý do rời đi
-public class SDReasonLeave extends PersistableEntity<Long> {
+// Bảng: Lãnh đạo tương lai
+public class SDFutureLeader extends PersistableEntity<Long> {
 
     @Id
     @GenericGenerator(name = "id", strategy = "com.xdp.lib.generator.SnowflakeId")
@@ -45,8 +45,8 @@ public class SDReasonLeave extends PersistableEntity<Long> {
     @Column(length = 20)
     private String color;
 
-    public static SDReasonLeave of(Long cid, String uid, SDReasonLeaveDTO dto) {
-        return SDReasonLeave.builder()
+    public static SDFutureLeader of(Long cid, String uid, SDFutureLeaderDTO dto) {
+        return SDFutureLeader.builder()
                 .code(dto.getCode().toUpperCase())
                 .name(dto.getName())
                 .description(dto.getDescription())
@@ -57,8 +57,8 @@ public class SDReasonLeave extends PersistableEntity<Long> {
                 .build();
     }
 
-    public static SDReasonLeaveDTO toDTO(SDReasonLeave entity) {
-        return SDReasonLeaveDTO.builder()
+    public static SDFutureLeaderDTO toDTO(SDFutureLeader entity) {
+        return SDFutureLeaderDTO.builder()
                 .id(entity.getId())
                 .code(entity.getCode().toUpperCase())
                 .name(entity.getName())
@@ -75,8 +75,8 @@ public class SDReasonLeave extends PersistableEntity<Long> {
                 .build();
     }
 
-    public static List<SDReasonLeaveDTO> toDTOs(List<SDReasonLeave> list) {
-        return list.stream().map(SDReasonLeave::toDTO).collect(Collectors.toList());
+    public static List<SDFutureLeaderDTO> toDTOs(List<SDFutureLeader> list) {
+        return list.stream().map(SDFutureLeader::toDTO).collect(Collectors.toList());
     }
 
 }

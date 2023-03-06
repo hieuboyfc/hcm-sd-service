@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-import vn.ngs.nspace.hcm.sd.entities.category.SDReasonLeave;
+import vn.ngs.nspace.hcm.sd.entities.SDReasonLeave;
 import vn.ngs.nspace.hcm.sd.repository.SDReasonLeaveRepo;
 import vn.ngs.nspace.hcm.sd.service.SDReasonLeaveService;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDReasonLeaveDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDReasonLeaveDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +88,9 @@ public class SDReasonLeaveServiceImpl implements SDReasonLeaveService {
         if (entityOptional.isPresent()) {
             SDReasonLeave entity = entityOptional.get();
             return SDReasonLeave.toDTO(entity);
+        } else {
+            throw new BusinessException("sd-reason-leave-not-found");
         }
-        return null;
     }
 
     private SDReasonLeave validateInput(Long cid, String uid, SDReasonLeaveDTO dto, Boolean isEdit, String type) {

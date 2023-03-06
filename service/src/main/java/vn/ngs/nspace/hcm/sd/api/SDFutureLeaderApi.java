@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vn.ngs.nspace.hcm.sd.service.SDFutureLeaderService;
-import vn.ngs.nspace.hcm.sd.share.dto.category.SDFutureLeaderDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDFutureLeaderDTO;
 
 import java.util.List;
 

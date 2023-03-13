@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import vn.ngs.nspace.hcm.sd.share.dto.CareerPathFlowDTO;
+import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -21,10 +22,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(value = EntityListener.class)
-@Table(indexes = {
-        @Index(name = "career_path_flow_idx", columnList = "companyId, path"),
-        @Index(name = "career_path_flow_parent_idx", columnList = "companyId, parentId")
-})
+@Table(
+        name = SDUtils.CAREER_PATH_FLOW,
+        indexes = {
+                @Index(name = "CareerPathFlow_idx", columnList = "companyId, path"),
+                @Index(name = "CareerPathFlowParent_idx", columnList = "companyId, parentId")
+        })
 public class CareerPathFlow extends PersistableEntity<Long> {
 
     @Id
@@ -32,21 +35,27 @@ public class CareerPathFlow extends PersistableEntity<Long> {
     @GeneratedValue(generator = "id")
     private Long id;
 
+    @Column(length = 8)
+    private String code;
+
+    @Column(length = 50)
+    private String name;
+
     private Long careerPathId;
 
     private Long positionId;
 
     private Long parentId;
 
+    private Integer level;
+
     @Column(columnDefinition = "ltree")
     private String path;
 
-    @Size(max = 500)
+    @Column(length = 500)
     private String pathName;
 
-    private boolean tick;
-
-    @Size(max = 300)
+    @Column(length = 300)
     private String description;
 
     public static CareerPathFlow of(CareerPathFlowDTO dto) {

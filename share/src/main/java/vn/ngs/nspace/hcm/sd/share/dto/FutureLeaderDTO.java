@@ -9,18 +9,14 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class CareerPathFlowDTO {
+public class FutureLeaderDTO {
 
     private Long id;
     private String code;
     private String name;
-    private Long careerPathId;
-    private Long positionId;
-    private Long parentId;
-    private Integer level;
-    private String path;
-    private String pathName;
     private String description;
+    private String icon;
+    private String color;
 
     private Date createDate;
     private Date modifiedDate;

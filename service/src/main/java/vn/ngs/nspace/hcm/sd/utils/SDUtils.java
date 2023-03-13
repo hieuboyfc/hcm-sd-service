@@ -5,13 +5,18 @@ public class SDUtils {
     public SDUtils() {
     }
 
-    public static final String SD_FORMULA_SETUP = "sd_formula_setup";
-    public static final String SD_FUNC_VARIABLE = "sd_func_variable";
-    public static final String SD_RISK_LEAVE_WORK = "sd_risk_leave_work";
-    public static final String SD_AFFECT_LEAVE_WORK = "sd_affect_leave_work";
-    public static final String SD_REASON_LEAVE = "sd_reason_leave";
-    public static final String SD_FUTURE_LEADER = "sd_future_leader";
-    public static final String SD_HEIR_SETTING = "sd_heir_setting";
+    public static final String FORMULA_SETUP = "formula_setup";
+    public static final String FUNC_VARIABLE = "func_variable";
+    public static final String RISK_LEAVE_WORK = "risk_leave_work";
+    public static final String AFFECT_LEAVE_WORK = "affect_leave_work";
+    public static final String REASON_LEAVE = "reason_leave";
+    public static final String FUTURE_LEADER = "future_leader";
+    public static final String HEIR_SETUP = "heir_setup";
+    public static final String CAREER_PATH = "career_path";
+    public static final String CAREER_PATH_FLOW = "career_path_flow";
+    public static final String CAREER_PATH_FLOW_EMP = "career_path_flow_emp";
+    public static final String CAREER_PATH_FLOW_QUALIFIED = "career_path_flow_qualified";
+    public static final String CAREER_PATH_SETUP = "career_path_setup";
 
     public static final String RATE_EE = "Rate_ee";
     public static final String RATE_POS = "Rate_pos";

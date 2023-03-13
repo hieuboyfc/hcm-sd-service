@@ -20,14 +20,12 @@ vn/ngs/nspace/hcm/sd/entities/CareerPath.java
  vn.ngs.nspace.hcm.sd.entities.CareerPath
  vn.ngs.nspace.hcm.sd.entities.CareerPath$CareerPathBuilder
  vn.ngs.nspace.hcm.sd.entities.CareerPath$CareerPathBuilderImpl
+vn/ngs/nspace/hcm/sd/utils/SDUtils.java
+ vn.ngs.nspace.hcm.sd.utils.SDUtils
 vn/ngs/nspace/hcm/sd/entities/SDFormulaSetup.java
  vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup
  vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup$SDFormulaSetupBuilder
  vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup$SDFormulaSetupBuilderImpl
-vn/ngs/nspace/hcm/sd/entities/SDFuncVariable.java
- vn.ngs.nspace.hcm.sd.entities.SDFuncVariable
- vn.ngs.nspace.hcm.sd.entities.SDFuncVariable$SDFuncVariableBuilder
- vn.ngs.nspace.hcm.sd.entities.SDFuncVariable$SDFuncVariableBuilderImpl
 vn/ngs/nspace/hcm/sd/api/SDFormulaSetupApi.java
  vn.ngs.nspace.hcm.sd.api.SDFormulaSetupApi
 vn/ngs/nspace/hcm/sd/repository/SDRiskLeaveWorkRepo.java
@@ -82,9 +80,11 @@ vn/ngs/nspace/hcm/sd/entities/SDRiskLeaveWork.java
  vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork
  vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork$SDRiskLeaveWorkBuilder
  vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork$SDRiskLeaveWorkBuilderImpl
-vn/ngs/nspace/hcm/sd/service/impl/SDFormulaSetupServiceImpl.java
- vn.ngs.nspace.hcm.sd.service.impl.SDFormulaSetupServiceImpl
 vn/ngs/nspace/hcm/sd/service/SDReasonLeaveService.java
  vn.ngs.nspace.hcm.sd.service.SDReasonLeaveService
-vn/ngs/nspace/hcm/sd/utils/SDUtils.java
- vn.ngs.nspace.hcm.sd.utils.SDUtils
+vn/ngs/nspace/hcm/sd/entities/SDFuncVariable.java
+ vn.ngs.nspace.hcm.sd.entities.SDFuncVariable
+ vn.ngs.nspace.hcm.sd.entities.SDFuncVariable$SDFuncVariableBuilder
+ vn.ngs.nspace.hcm.sd.entities.SDFuncVariable$SDFuncVariableBuilderImpl
+vn/ngs/nspace/hcm/sd/service/impl/SDFormulaSetupServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.SDFormulaSetupServiceImpl

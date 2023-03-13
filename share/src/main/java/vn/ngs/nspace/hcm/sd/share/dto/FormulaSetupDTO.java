@@ -9,18 +9,17 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class CareerPathFlowDTO {
+public class FormulaSetupDTO {
 
     private Long id;
     private String code;
     private String name;
-    private Long careerPathId;
-    private Long positionId;
-    private Long parentId;
-    private Integer level;
-    private String path;
-    private String pathName;
-    private String description;
+    private String type;
+    private String syntax;
+    private String variable;
+    private Date startDate;
+    private Date endDate;
+    private String search;
 
     private Date createDate;
     private Date modifiedDate;

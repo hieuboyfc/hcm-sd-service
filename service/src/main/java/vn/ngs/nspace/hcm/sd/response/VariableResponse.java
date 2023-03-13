@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import vn.ngs.nspace.hcm.sd.share.dto.SDFuncVariableDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.FuncVariableDTO;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class VariableResponse {
 
-    private List<SDFuncVariableDTO> function;
-    private List<SDFuncVariableDTO> variable;
+    private List<FuncVariableDTO> function;
+    private List<FuncVariableDTO> variable;
 
 }

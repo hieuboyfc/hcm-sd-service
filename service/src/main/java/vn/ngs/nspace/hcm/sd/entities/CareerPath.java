@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import vn.ngs.nspace.hcm.sd.share.dto.CareerPathDTO;
+import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,10 +24,11 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @EntityListeners(value = EntityListener.class)
-@Table(indexes = {
-        @Index(name = "career_path_pk", columnList = "id"),
-        @Index(name = "career_path_idx", columnList = "companyId, code")
-})
+@Table(
+        name = SDUtils.CAREER_PATH,
+        indexes = {
+                @Index(name = "CareerPath_idx", columnList = "companyId, code")
+        })
 public class CareerPath extends PersistableEntity<Long> {
 
     @Id
@@ -34,20 +36,18 @@ public class CareerPath extends PersistableEntity<Long> {
     @GeneratedValue(generator = "id")
     private Long id;
 
-    @NotNull
-    @Size(max = 8)
-    private Long code;
+    @Column(length = 8, nullable = false)
+    private String code;
 
-    @NotNull
-    @Size(max = 50)
-    private Date name;
+    @Column(length = 50, nullable = false)
+    private String name;
 
-    private Date orgId;
+    private Long orgId;
 
-    @Size(max = 300)
+    @Column(length = 300)
     private String description;
 
-    public static CareerPath of(CareerPathDTO dto) {
+    public static CareerPath of(Long cid, String uid, CareerPathDTO dto) {
         CareerPath entity = new CareerPath();
         MapperUtils.copyWithoutAudit(dto, entity);
         return entity;

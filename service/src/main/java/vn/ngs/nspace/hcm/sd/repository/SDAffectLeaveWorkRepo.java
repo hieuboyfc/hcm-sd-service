@@ -13,17 +13,22 @@ import java.util.Optional;
 @Repository
 public interface SDAffectLeaveWorkRepo extends BaseRepo<SDAffectLeaveWork, Long> {
 
+    @Query(value = "SELECT salw FROM SDAffectLeaveWork AS salw " +
+            "WHERE salw.companyId = :cid " +
+            "   AND (salw.id <> :id OR -1 = :id)  " +
+            "   AND salw.status = :status ")
+    SDAffectLeaveWork findByIdExists(Long cid, Integer status, Long id);
+
     Optional<SDAffectLeaveWork> findByCompanyIdAndStatusAndCode(Long cid, Integer status, String code);
 
     Optional<SDAffectLeaveWork> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
-    List<SDAffectLeaveWork> findAllByCompanyIdAndStatusAndIdIn(Long cid, Integer status, List<Long> ids);
+    List<SDAffectLeaveWork> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT salw FROM SDAffectLeaveWork AS salw " +
             "WHERE salw.companyId = :cid " +
-            "AND salw.status = :status " +
-            "AND CONCAT(COALESCE(LOWER(salw.code), ''), COALESCE(LOWER(salw.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
+            "   AND CONCAT(COALESCE(LOWER(salw.code), ''), COALESCE(LOWER(salw.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
             "ORDER BY salw.name, salw.code ASC ")
-    Page<SDAffectLeaveWork> getListAffectLeaveWork(Long cid, Integer status, String search, Pageable pageable);
+    Page<SDAffectLeaveWork> getListAffectLeaveWork(Long cid, String search, Pageable pageable);
 
 }

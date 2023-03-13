@@ -2,6 +2,7 @@ package vn.ngs.nspace.hcm.sd.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import vn.ngs.nspace.hcm.sd.response.VariableResponse;
 import vn.ngs.nspace.hcm.sd.share.dto.SDFormulaSetupDTO;
 
 import java.io.IOException;
@@ -22,4 +23,6 @@ public interface SDFormulaSetupService {
     Object runFormula(Long cid, String uid, Long id, List<Object> listValue) throws IOException;
 
     SDFormulaSetupDTO checkSyntax(long cid, String uid, SDFormulaSetupDTO dto);
+
+    VariableResponse getVariable(Long cid, String uid);
 }

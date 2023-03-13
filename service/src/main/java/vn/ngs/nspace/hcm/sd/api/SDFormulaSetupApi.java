@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import vn.ngs.nspace.hcm.sd.response.VariableResponse;
 import vn.ngs.nspace.hcm.sd.service.SDFormulaSetupService;
 import vn.ngs.nspace.hcm.sd.share.dto.SDFormulaSetupDTO;
 
@@ -128,6 +129,21 @@ public class SDFormulaSetupApi {
                                          @Parameter(description = "Payload variable value") @RequestBody SDFormulaSetupDTO dto) {
         try {
             return ResponseUtils.handlerSuccess(service.checkSyntax(cid, uid, dto));
+        } catch (Exception e) {
+            return ResponseUtils.handlerException(e);
+        }
+    }
+
+    @GetMapping("/load-variable")
+    @ActionMapping(action = Permission.VIEW)
+    @Operation(summary = "Load Variable - SD Formula Setup", description = "Load Variable - SD Formula Setup", tags = {"SDFormulaSetup"})
+    @Parameter(in = ParameterIn.HEADER, description = "Addition Key to bypass authen", name = "key",
+            schema = @Schema(implementation = String.class))
+    public ResponseEntity<?> getVariable(@Parameter(description = "Id of Company") @RequestHeader("cid") Long cid,
+                                         @Parameter(description = "Id of User") @RequestHeader("uid") String uid) {
+        try {
+            VariableResponse variableResponse = service.getVariable(cid, uid);
+            return ResponseUtils.handlerSuccess(variableResponse);
         } catch (Exception e) {
             return ResponseUtils.handlerException(e);
         }

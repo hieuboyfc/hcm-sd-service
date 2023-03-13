@@ -25,9 +25,7 @@ public class SDReasonLeaveServiceImpl implements SDReasonLeaveService {
 
     @Override
     public Page<SDReasonLeaveDTO> getList(long cid, String uid, String search, Pageable pageable) {
-        Page<SDReasonLeave> listPages = repo.getListReasonLeave(
-                cid, Constants.STATE_ACTIVE, search, pageable
-        );
+        Page<SDReasonLeave> listPages = repo.getListReasonLeave(cid, search, pageable);
         List<SDReasonLeaveDTO> listDTOs = SDReasonLeave.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());
     }
@@ -71,7 +69,7 @@ public class SDReasonLeaveServiceImpl implements SDReasonLeaveService {
         if (ids.isEmpty()) {
             throw new BusinessException("required-field-null");
         }
-        List<SDReasonLeave> listData = repo.findAllByCompanyIdAndStatusAndIdIn(cid, Constants.STATE_ACTIVE, ids);
+        List<SDReasonLeave> listData = repo.findAllByCompanyIdAndIdIn(cid, ids);
         if (listData.isEmpty()) {
             throw new BusinessException("sd-reason-leave-not-found");
         }
@@ -97,14 +95,19 @@ public class SDReasonLeaveServiceImpl implements SDReasonLeaveService {
         if (!StringUtils.hasLength(dto.getCode()) || !StringUtils.hasLength(dto.getName())) {
             throw new BusinessException("required-field-null");
         }
-        SDReasonLeave entity = repo
-                .findByCompanyIdAndStatusAndCode(cid, Constants.STATE_ACTIVE, dto.getCode())
-                .orElse(null);
+
+        SDReasonLeave entity;
         if (isEdit) {
+            Long id = dto.getId() != null ? dto.getId() : -1L;
+            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-reason-leave-not-found");
             }
+            if (!dto.getCode().equals(entity.getCode())) {
+                throw new BusinessException("sd-reason-leave-code-not-changed");
+            }
         } else {
+            entity = repo.findByCompanyIdAndStatusAndCode(cid, dto.getStatus(), dto.getCode()).orElse(null);
             if (entity != null) {
                 throw new BusinessException("sd-reason-leave-exist");
             }

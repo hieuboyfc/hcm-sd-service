@@ -13,17 +13,22 @@ import java.util.Optional;
 @Repository
 public interface SDRiskLeaveWorkRepo extends BaseRepo<SDRiskLeaveWork, Long> {
 
+    @Query(value = "SELECT srlw FROM SDRiskLeaveWork AS srlw " +
+            "WHERE srlw.companyId = :cid " +
+            "   AND (srlw.id <> :id OR -1 = :id)  " +
+            "   AND srlw.status = :status ")
+    SDRiskLeaveWork findByIdExists(Long cid, Integer status, Long id);
+
     Optional<SDRiskLeaveWork> findByCompanyIdAndStatusAndCode(Long cid, Integer status, String code);
 
     Optional<SDRiskLeaveWork> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
-    List<SDRiskLeaveWork> findAllByCompanyIdAndStatusAndIdIn(Long cid, Integer status, List<Long> ids);
+    List<SDRiskLeaveWork> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT srlw FROM SDRiskLeaveWork AS srlw " +
             "WHERE srlw.companyId = :cid " +
-            "AND srlw.status = :status " +
             "AND CONCAT(COALESCE(LOWER(srlw.code), ''), COALESCE(LOWER(srlw.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
             "ORDER BY srlw.name, srlw.code ASC ")
-    Page<SDRiskLeaveWork> getListRiskLeaveWork(Long cid, Integer status, String search, Pageable pageable);
+    Page<SDRiskLeaveWork> getListRiskLeaveWork(Long cid, String search, Pageable pageable);
 
 }

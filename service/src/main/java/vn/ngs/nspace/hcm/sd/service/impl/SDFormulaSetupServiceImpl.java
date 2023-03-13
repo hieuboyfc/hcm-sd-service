@@ -14,9 +14,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup;
+import vn.ngs.nspace.hcm.sd.entities.SDFuncVariable;
 import vn.ngs.nspace.hcm.sd.repository.SDFormulaSetupRepo;
+import vn.ngs.nspace.hcm.sd.repository.SDFuncVariableRepo;
+import vn.ngs.nspace.hcm.sd.response.VariableResponse;
 import vn.ngs.nspace.hcm.sd.service.SDFormulaSetupService;
 import vn.ngs.nspace.hcm.sd.share.dto.SDFormulaSetupDTO;
+import vn.ngs.nspace.hcm.sd.share.dto.SDFuncVariableDTO;
 import vn.ngs.nspace.hcm.sd.utils.DateTimeUtils;
 import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
@@ -31,6 +35,7 @@ import java.util.stream.Stream;
 public class SDFormulaSetupServiceImpl implements SDFormulaSetupService {
 
     private final SDFormulaSetupRepo repo;
+    private final SDFuncVariableRepo funcVariableRepo;
 
     @Override
     public Page<SDFormulaSetupDTO> search(Long cid, String uid, SDFormulaSetupDTO dto, Pageable pageable) {
@@ -155,6 +160,30 @@ public class SDFormulaSetupServiceImpl implements SDFormulaSetupService {
             checkSyn(dto.getSyntax(), parentheses, quotes);
         }
         return dto;
+    }
+
+    @Override
+    public VariableResponse getVariable(Long cid, String uid) {
+        VariableResponse variableResponse = new VariableResponse();
+        List<SDFuncVariable> funcVariables = funcVariableRepo.findAllByCompanyIdAndStatus(cid, Constants.STATE_ACTIVE);
+        List<SDFuncVariableDTO> functionDTO = new ArrayList<>();
+        List<SDFuncVariableDTO> variableDTO = new ArrayList<>();
+        funcVariables.forEach(item -> {
+            SDFuncVariableDTO funcVariableDTO = new SDFuncVariableDTO();
+            funcVariableDTO.setCode(item.getCode());
+            funcVariableDTO.setName(item.getName());
+            // 1 - Danh sách các Hàm
+            if (item.getType() == 1) {
+                functionDTO.add(funcVariableDTO);
+            }
+            // 2 - Danh sách các Biến
+            if (item.getType() == 2) {
+                variableDTO.add(funcVariableDTO);
+            }
+        });
+        variableResponse.setFunction(functionDTO);
+        variableResponse.setVariable(variableDTO);
+        return variableResponse;
     }
 
     private SDFormulaSetup validateInput(Long cid, String uid, SDFormulaSetupDTO dto, boolean isEdit, String type) {

@@ -25,9 +25,7 @@ public class SDFutureLeaderServiceImpl implements SDFutureLeaderService {
 
     @Override
     public Page<SDFutureLeaderDTO> getList(long cid, String uid, String search, Pageable pageable) {
-        Page<SDFutureLeader> listPages = repo.getListFutureLeader(
-                cid, Constants.STATE_ACTIVE, search, pageable
-        );
+        Page<SDFutureLeader> listPages = repo.getListFutureLeader(cid, search, pageable);
         List<SDFutureLeaderDTO> listDTOs = SDFutureLeader.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());
     }
@@ -71,7 +69,7 @@ public class SDFutureLeaderServiceImpl implements SDFutureLeaderService {
         if (ids.isEmpty()) {
             throw new BusinessException("required-field-null");
         }
-        List<SDFutureLeader> listData = repo.findAllByCompanyIdAndStatusAndIdIn(cid, Constants.STATE_ACTIVE, ids);
+        List<SDFutureLeader> listData = repo.findAllByCompanyIdAndIdIn(cid, ids);
         if (listData.isEmpty()) {
             throw new BusinessException("sd-future-leader-not-found");
         }
@@ -97,14 +95,19 @@ public class SDFutureLeaderServiceImpl implements SDFutureLeaderService {
         if (!StringUtils.hasLength(dto.getCode()) || !StringUtils.hasLength(dto.getName())) {
             throw new BusinessException("required-field-null");
         }
-        SDFutureLeader entity = repo
-                .findByCompanyIdAndStatusAndCode(cid, Constants.STATE_ACTIVE, dto.getCode())
-                .orElse(null);
+
+        SDFutureLeader entity;
         if (isEdit) {
+            Long id = dto.getId() != null ? dto.getId() : -1L;
+            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-future-leader-not-found");
             }
+            if (!dto.getCode().equals(entity.getCode())) {
+                throw new BusinessException("sd-future-leader-code-not-changed");
+            }
         } else {
+            entity = repo.findByCompanyIdAndStatusAndCode(cid, dto.getStatus(), dto.getCode()).orElse(null);
             if (entity != null) {
                 throw new BusinessException("sd-future-leader-exist");
             }

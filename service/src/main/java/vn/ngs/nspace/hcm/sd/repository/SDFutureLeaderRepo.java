@@ -13,17 +13,22 @@ import java.util.Optional;
 @Repository
 public interface SDFutureLeaderRepo extends BaseRepo<SDFutureLeader, Long> {
 
+    @Query(value = "SELECT sfl FROM SDFutureLeader AS sfl " +
+            "WHERE sfl.companyId = :cid " +
+            "   AND (sfl.id <> :id OR -1 = :id)  " +
+            "   AND sfl.status = :status ")
+    SDFutureLeader findByIdExists(Long cid, Integer status, Long id);
+
     Optional<SDFutureLeader> findByCompanyIdAndStatusAndCode(Long cid, Integer status, String code);
 
     Optional<SDFutureLeader> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
-    List<SDFutureLeader> findAllByCompanyIdAndStatusAndIdIn(Long cid, Integer status, List<Long> ids);
+    List<SDFutureLeader> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT sfl FROM SDFutureLeader AS sfl " +
             "WHERE sfl.companyId = :cid " +
-            "AND sfl.status = :status " +
             "AND CONCAT(COALESCE(LOWER(sfl.code), ''), COALESCE(LOWER(sfl.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
             "ORDER BY sfl.name, sfl.code ASC ")
-    Page<SDFutureLeader> getListFutureLeader(Long cid, Integer status, String search, Pageable pageable);
+    Page<SDFutureLeader> getListFutureLeader(Long cid, String search, Pageable pageable);
 
 }

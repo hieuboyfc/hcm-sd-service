@@ -25,9 +25,7 @@ public class SDRiskLeaveWorkServiceImpl implements SDRiskLeaveWorkService {
 
     @Override
     public Page<SDRiskLeaveWorkDTO> getList(long cid, String uid, String search, Pageable pageable) {
-        Page<SDRiskLeaveWork> listPages = repo.getListRiskLeaveWork(
-                cid, Constants.STATE_ACTIVE, search, pageable
-        );
+        Page<SDRiskLeaveWork> listPages = repo.getListRiskLeaveWork(cid, search, pageable);
         List<SDRiskLeaveWorkDTO> listDTOs = SDRiskLeaveWork.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());
     }
@@ -71,7 +69,7 @@ public class SDRiskLeaveWorkServiceImpl implements SDRiskLeaveWorkService {
         if (ids.isEmpty()) {
             throw new BusinessException("required-field-null");
         }
-        List<SDRiskLeaveWork> listData = repo.findAllByCompanyIdAndStatusAndIdIn(cid, Constants.STATE_ACTIVE, ids);
+        List<SDRiskLeaveWork> listData = repo.findAllByCompanyIdAndIdIn(cid, ids);
         if (listData.isEmpty()) {
             throw new BusinessException("sd-risk-leave-work-not-found");
         }
@@ -97,14 +95,19 @@ public class SDRiskLeaveWorkServiceImpl implements SDRiskLeaveWorkService {
         if (!StringUtils.hasLength(dto.getCode()) || !StringUtils.hasLength(dto.getName())) {
             throw new BusinessException("required-field-null");
         }
-        SDRiskLeaveWork entity = repo
-                .findByCompanyIdAndStatusAndCode(cid, Constants.STATE_ACTIVE, dto.getCode())
-                .orElse(null);
+
+        SDRiskLeaveWork entity;
         if (isEdit) {
+            Long id = dto.getId() != null ? dto.getId() : -1L;
+            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-risk-leave-work-not-found");
             }
+            if (!dto.getCode().equals(entity.getCode())) {
+                throw new BusinessException("sd-risk-leave-work-code-not-changed");
+            }
         } else {
+            entity = repo.findByCompanyIdAndStatusAndCode(cid, dto.getStatus(), dto.getCode()).orElse(null);
             if (entity != null) {
                 throw new BusinessException("sd-risk-leave-work-exist");
             }

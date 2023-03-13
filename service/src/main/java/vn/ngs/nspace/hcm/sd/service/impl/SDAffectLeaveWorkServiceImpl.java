@@ -25,9 +25,7 @@ public class SDAffectLeaveWorkServiceImpl implements SDAffectLeaveWorkService {
 
     @Override
     public Page<SDAffectLeaveWorkDTO> getList(long cid, String uid, String search, Pageable pageable) {
-        Page<SDAffectLeaveWork> listPages = repo.getListAffectLeaveWork(
-                cid, Constants.STATE_ACTIVE, search, pageable
-        );
+        Page<SDAffectLeaveWork> listPages = repo.getListAffectLeaveWork(cid, search, pageable);
         List<SDAffectLeaveWorkDTO> listDTOs = SDAffectLeaveWork.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());
     }
@@ -71,7 +69,7 @@ public class SDAffectLeaveWorkServiceImpl implements SDAffectLeaveWorkService {
         if (ids.isEmpty()) {
             throw new BusinessException("required-field-null");
         }
-        List<SDAffectLeaveWork> listData = repo.findAllByCompanyIdAndStatusAndIdIn(cid, Constants.STATE_ACTIVE, ids);
+        List<SDAffectLeaveWork> listData = repo.findAllByCompanyIdAndIdIn(cid, ids);
         if (listData.isEmpty()) {
             throw new BusinessException("sd-affect-leave-work-not-found");
         }
@@ -97,14 +95,19 @@ public class SDAffectLeaveWorkServiceImpl implements SDAffectLeaveWorkService {
         if (!StringUtils.hasLength(dto.getCode()) || !StringUtils.hasLength(dto.getName())) {
             throw new BusinessException("required-field-null");
         }
-        SDAffectLeaveWork entity = repo
-                .findByCompanyIdAndStatusAndCode(cid, Constants.STATE_ACTIVE, dto.getCode())
-                .orElse(null);
+
+        SDAffectLeaveWork entity;
         if (isEdit) {
+            Long id = dto.getId() != null ? dto.getId() : -1L;
+            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-affect-leave-work-not-found");
             }
+            if (!dto.getCode().equals(entity.getCode())) {
+                throw new BusinessException("sd-affect-leave-work-code-not-changed");
+            }
         } else {
+            entity = repo.findByCompanyIdAndStatusAndCode(cid, dto.getStatus(), dto.getCode()).orElse(null);
             if (entity != null) {
                 throw new BusinessException("sd-affect-leave-work-exist");
             }

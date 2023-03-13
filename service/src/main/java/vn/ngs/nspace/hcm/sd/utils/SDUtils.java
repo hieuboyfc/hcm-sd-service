@@ -6,6 +6,7 @@ public class SDUtils {
     }
 
     public static final String SD_FORMULA_SETUP = "sd_formula_setup";
+    public static final String SD_FUNC_VARIABLE = "sd_func_variable";
     public static final String SD_RISK_LEAVE_WORK = "sd_risk_leave_work";
     public static final String SD_AFFECT_LEAVE_WORK = "sd_affect_leave_work";
     public static final String SD_REASON_LEAVE = "sd_reason_leave";

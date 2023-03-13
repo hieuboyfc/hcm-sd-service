@@ -13,17 +13,22 @@ import java.util.Optional;
 @Repository
 public interface SDReasonLeaveRepo extends BaseRepo<SDReasonLeave, Long> {
 
+    @Query(value = "SELECT srl FROM SDReasonLeave AS srl " +
+            "WHERE srl.companyId = :cid " +
+            "   AND (srl.id <> :id OR -1 = :id)  " +
+            "   AND srl.status = :status ")
+    SDReasonLeave findByIdExists(Long cid, Integer status, Long id);
+
     Optional<SDReasonLeave> findByCompanyIdAndStatusAndCode(Long cid, Integer status, String code);
 
     Optional<SDReasonLeave> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
-    List<SDReasonLeave> findAllByCompanyIdAndStatusAndIdIn(Long cid, Integer status, List<Long> ids);
+    List<SDReasonLeave> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT srl FROM SDReasonLeave AS srl " +
             "WHERE srl.companyId = :cid " +
-            "AND srl.status = :status " +
             "AND CONCAT(COALESCE(LOWER(srl.code), ''), COALESCE(LOWER(srl.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
             "ORDER BY srl.name, srl.code ASC ")
-    Page<SDReasonLeave> getListReasonLeave(Long cid, Integer status, String search, Pageable pageable);
+    Page<SDReasonLeave> getListReasonLeave(Long cid, String search, Pageable pageable);
 
 }

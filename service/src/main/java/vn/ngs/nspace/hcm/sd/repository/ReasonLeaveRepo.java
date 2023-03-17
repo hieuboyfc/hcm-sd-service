@@ -23,6 +23,8 @@ public interface ReasonLeaveRepo extends BaseRepo<ReasonLeave, Long> {
 
     Optional<ReasonLeave> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
+    Optional<ReasonLeave> findByCompanyIdAndId(Long cid, Long id);
+
     List<ReasonLeave> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT srl FROM ReasonLeave AS srl " +

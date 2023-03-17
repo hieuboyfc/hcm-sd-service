@@ -23,6 +23,8 @@ public interface FutureLeaderRepo extends BaseRepo<FutureLeader, Long> {
 
     Optional<FutureLeader> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
+    Optional<FutureLeader> findByCompanyIdAndId(Long cid, Long id);
+
     List<FutureLeader> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT sfl FROM FutureLeader AS sfl " +

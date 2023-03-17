@@ -56,6 +56,7 @@ public class AffectLeaveWorkServiceImpl implements AffectLeaveWorkService {
             entity.setDescription(dto.getDescription());
             entity.setIcon(dto.getIcon());
             entity.setColor(dto.getColor());
+            entity.setStatus(dto.getStatus());
             entity.setUpdateBy(uid);
             repo.save(entity);
             dtoData = AffectLeaveWork.toDTO(entity);
@@ -82,7 +83,7 @@ public class AffectLeaveWorkServiceImpl implements AffectLeaveWorkService {
 
     @Override
     public AffectLeaveWorkDTO getDetail(Long cid, String uid, Long id) {
-        Optional<AffectLeaveWork> entityOptional = repo.findByCompanyIdAndStatusAndId(cid, Constants.STATE_ACTIVE, id);
+        Optional<AffectLeaveWork> entityOptional = repo.findByCompanyIdAndId(cid, id);
         if (entityOptional.isPresent()) {
             AffectLeaveWork entity = entityOptional.get();
             return AffectLeaveWork.toDTO(entity);
@@ -99,7 +100,7 @@ public class AffectLeaveWorkServiceImpl implements AffectLeaveWorkService {
         AffectLeaveWork entity;
         if (isEdit) {
             Long id = dto.getId() != null ? dto.getId() : -1L;
-            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
+            entity = repo.findByCompanyIdAndId(cid, id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-affect-leave-work-not-found");
             }

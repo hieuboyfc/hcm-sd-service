@@ -38,6 +38,8 @@ public interface FormulaSetupRepo extends BaseRepo<FormulaSetup, Long> {
             "       ORDER BY sfs.startDate ")
     List<FormulaSetup> getByCodeAndEffectiveDate(Long cid, Long id, Integer status, String code, Date startDate, Date endDate);
 
+    Optional<FormulaSetup> findByCompanyIdAndId(Long cid, Long id);
+
     Optional<FormulaSetup> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
     List<FormulaSetup> findAllByCompanyIdAndStatusAndIdIn(Long cid, Integer status, List<Long> ids);

@@ -23,6 +23,8 @@ public interface AffectLeaveWorkRepo extends BaseRepo<AffectLeaveWork, Long> {
 
     Optional<AffectLeaveWork> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
+    Optional<AffectLeaveWork> findByCompanyIdAndId(Long cid, Long id);
+
     List<AffectLeaveWork> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT salw FROM AffectLeaveWork AS salw " +

@@ -25,7 +25,8 @@ import java.util.stream.Collectors;
         name = SDUtils.CAREER_PATH_FLOW_EMP,
         indexes = {
                 @Index(name = "CareerPathFlowEmp_idx", columnList = "companyId, empId"),
-        })
+        }
+)
 public class CareerPathFlowEmp extends PersistableEntity<Long> {
 
     @Id

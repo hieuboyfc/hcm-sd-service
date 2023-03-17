@@ -1,90 +1,116 @@
-vn/ngs/nspace/hcm/sd/service/SDRiskLeaveWorkService.java
- vn.ngs.nspace.hcm.sd.service.SDRiskLeaveWorkService
-vn/ngs/nspace/hcm/sd/api/SDFutureLeaderApi.java
- vn.ngs.nspace.hcm.sd.api.SDFutureLeaderApi
-vn/ngs/nspace/hcm/sd/service/SDFutureLeaderService.java
- vn.ngs.nspace.hcm.sd.service.SDFutureLeaderService
-vn/ngs/nspace/hcm/sd/service/impl/SDReasonLeaveServiceImpl.java
- vn.ngs.nspace.hcm.sd.service.impl.SDReasonLeaveServiceImpl
-vn/ngs/nspace/hcm/sd/entities/SDHeirSetting.java
- vn.ngs.nspace.hcm.sd.entities.SDHeirSetting
- vn.ngs.nspace.hcm.sd.entities.SDHeirSetting$SDHeirSettingBuilder
- vn.ngs.nspace.hcm.sd.entities.SDHeirSetting$SDHeirSettingBuilderImpl
-vn/ngs/nspace/hcm/sd/entities/SDFutureLeader.java
- vn.ngs.nspace.hcm.sd.entities.SDFutureLeader
- vn.ngs.nspace.hcm.sd.entities.SDFutureLeader$SDFutureLeaderBuilder
- vn.ngs.nspace.hcm.sd.entities.SDFutureLeader$SDFutureLeaderBuilderImpl
+vn/ngs/nspace/hcm/sd/entities/FuncVariable.java
+ vn.ngs.nspace.hcm.sd.entities.FuncVariable
+ vn.ngs.nspace.hcm.sd.entities.FuncVariable$FuncVariableBuilder
+ vn.ngs.nspace.hcm.sd.entities.FuncVariable$FuncVariableBuilderImpl
+vn/ngs/nspace/hcm/sd/entities/FormulaSetup.java
+ vn.ngs.nspace.hcm.sd.entities.FormulaSetup
+ vn.ngs.nspace.hcm.sd.entities.FormulaSetup$FormulaSetupBuilder
+ vn.ngs.nspace.hcm.sd.entities.FormulaSetup$FormulaSetupBuilderImpl
+vn/ngs/nspace/hcm/sd/service/ReasonLeaveService.java
+ vn.ngs.nspace.hcm.sd.service.ReasonLeaveService
+vn/ngs/nspace/hcm/sd/entities/ReasonLeave.java
+ vn.ngs.nspace.hcm.sd.entities.ReasonLeave
+ vn.ngs.nspace.hcm.sd.entities.ReasonLeave$ReasonLeaveBuilder
+ vn.ngs.nspace.hcm.sd.entities.ReasonLeave$ReasonLeaveBuilderImpl
+vn/ngs/nspace/hcm/sd/entities/CareerPathFlowEmp.java
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlowEmp
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlowEmp$CareerPathFlowEmpBuilder
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlowEmp$CareerPathFlowEmpBuilderImpl
 vn/ngs/nspace/hcm/sd/utils/StringUtils.java
  vn.ngs.nspace.hcm.sd.utils.StringUtils
+vn/ngs/nspace/hcm/sd/entities/CareerPathFlowQualified.java
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlowQualified
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlowQualified$CareerPathFlowQualifiedBuilder
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlowQualified$CareerPathFlowQualifiedBuilderImpl
 vn/ngs/nspace/hcm/sd/entities/CareerPath.java
  vn.ngs.nspace.hcm.sd.entities.CareerPath
  vn.ngs.nspace.hcm.sd.entities.CareerPath$CareerPathBuilder
  vn.ngs.nspace.hcm.sd.entities.CareerPath$CareerPathBuilderImpl
-vn/ngs/nspace/hcm/sd/utils/SDUtils.java
- vn.ngs.nspace.hcm.sd.utils.SDUtils
-vn/ngs/nspace/hcm/sd/entities/SDFormulaSetup.java
- vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup
- vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup$SDFormulaSetupBuilder
- vn.ngs.nspace.hcm.sd.entities.SDFormulaSetup$SDFormulaSetupBuilderImpl
-vn/ngs/nspace/hcm/sd/api/SDFormulaSetupApi.java
- vn.ngs.nspace.hcm.sd.api.SDFormulaSetupApi
-vn/ngs/nspace/hcm/sd/repository/SDRiskLeaveWorkRepo.java
- vn.ngs.nspace.hcm.sd.repository.SDRiskLeaveWorkRepo
-vn/ngs/nspace/hcm/sd/entities/SDAffectLeaveWork.java
- vn.ngs.nspace.hcm.sd.entities.SDAffectLeaveWork
- vn.ngs.nspace.hcm.sd.entities.SDAffectLeaveWork$SDAffectLeaveWorkBuilder
- vn.ngs.nspace.hcm.sd.entities.SDAffectLeaveWork$SDAffectLeaveWorkBuilderImpl
+vn/ngs/nspace/hcm/sd/api/ReasonLeaveApi.java
+ vn.ngs.nspace.hcm.sd.api.ReasonLeaveApi
+vn/ngs/nspace/hcm/sd/service/RiskLeaveWorkService.java
+ vn.ngs.nspace.hcm.sd.service.RiskLeaveWorkService
+vn/ngs/nspace/hcm/sd/service/FutureLeaderService.java
+ vn.ngs.nspace.hcm.sd.service.FutureLeaderService
+vn/ngs/nspace/hcm/sd/service/FormulaSetupService.java
+ vn.ngs.nspace.hcm.sd.service.FormulaSetupService
+vn/ngs/nspace/hcm/sd/api/FormulaSetupApi.java
+ vn.ngs.nspace.hcm.sd.api.FormulaSetupApi
+vn/ngs/nspace/hcm/sd/api/AffectLeaveWorkApi.java
+ vn.ngs.nspace.hcm.sd.api.AffectLeaveWorkApi
 vn/ngs/nspace/hcm/sd/entities/CareerPathFlow.java
  vn.ngs.nspace.hcm.sd.entities.CareerPathFlow
  vn.ngs.nspace.hcm.sd.entities.CareerPathFlow$CareerPathFlowBuilder
  vn.ngs.nspace.hcm.sd.entities.CareerPathFlow$CareerPathFlowBuilderImpl
-vn/ngs/nspace/hcm/sd/repository/SDFormulaSetupRepo.java
- vn.ngs.nspace.hcm.sd.repository.SDFormulaSetupRepo
 vn/ngs/nspace/hcm/sd/response/VariableResponse.java
  vn.ngs.nspace.hcm.sd.response.VariableResponse
-vn/ngs/nspace/hcm/sd/service/impl/SDAffectLeaveWorkServiceImpl.java
- vn.ngs.nspace.hcm.sd.service.impl.SDAffectLeaveWorkServiceImpl
-vn/ngs/nspace/hcm/sd/utils/ObjectUtils.java
- vn.ngs.nspace.hcm.sd.utils.ObjectUtils
-vn/ngs/nspace/hcm/sd/repository/SDAffectLeaveWorkRepo.java
- vn.ngs.nspace.hcm.sd.repository.SDAffectLeaveWorkRepo
-vn/ngs/nspace/hcm/sd/Application.java
- vn.ngs.nspace.hcm.sd.Application
-vn/ngs/nspace/hcm/sd/repository/SDFuncVariableRepo.java
- vn.ngs.nspace.hcm.sd.repository.SDFuncVariableRepo
-vn/ngs/nspace/hcm/sd/service/SDAffectLeaveWorkService.java
- vn.ngs.nspace.hcm.sd.service.SDAffectLeaveWorkService
-vn/ngs/nspace/hcm/sd/service/impl/SDRiskLeaveWorkServiceImpl.java
- vn.ngs.nspace.hcm.sd.service.impl.SDRiskLeaveWorkServiceImpl
+vn/ngs/nspace/hcm/sd/entities/FutureLeader.java
+ vn.ngs.nspace.hcm.sd.entities.FutureLeader
+ vn.ngs.nspace.hcm.sd.entities.FutureLeader$FutureLeaderBuilder
+ vn.ngs.nspace.hcm.sd.entities.FutureLeader$FutureLeaderBuilderImpl
 vn/ngs/nspace/hcm/sd/utils/DateTimeUtils.java
  vn.ngs.nspace.hcm.sd.utils.DateTimeUtils
-vn/ngs/nspace/hcm/sd/api/SDRiskLeaveWorkApi.java
- vn.ngs.nspace.hcm.sd.api.SDRiskLeaveWorkApi
-vn/ngs/nspace/hcm/sd/service/SDFormulaSetupService.java
- vn.ngs.nspace.hcm.sd.service.SDFormulaSetupService
-vn/ngs/nspace/hcm/sd/repository/SDReasonLeaveRepo.java
- vn.ngs.nspace.hcm.sd.repository.SDReasonLeaveRepo
-vn/ngs/nspace/hcm/sd/entities/SDReasonLeave.java
- vn.ngs.nspace.hcm.sd.entities.SDReasonLeave
- vn.ngs.nspace.hcm.sd.entities.SDReasonLeave$SDReasonLeaveBuilder
- vn.ngs.nspace.hcm.sd.entities.SDReasonLeave$SDReasonLeaveBuilderImpl
-vn/ngs/nspace/hcm/sd/api/SDAffectLeaveWorkApi.java
- vn.ngs.nspace.hcm.sd.api.SDAffectLeaveWorkApi
-vn/ngs/nspace/hcm/sd/api/SDReasonLeaveApi.java
- vn.ngs.nspace.hcm.sd.api.SDReasonLeaveApi
-vn/ngs/nspace/hcm/sd/repository/SDFutureLeaderRepo.java
- vn.ngs.nspace.hcm.sd.repository.SDFutureLeaderRepo
-vn/ngs/nspace/hcm/sd/service/impl/SDFutureLeaderServiceImpl.java
- vn.ngs.nspace.hcm.sd.service.impl.SDFutureLeaderServiceImpl
-vn/ngs/nspace/hcm/sd/entities/SDRiskLeaveWork.java
- vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork
- vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork$SDRiskLeaveWorkBuilder
- vn.ngs.nspace.hcm.sd.entities.SDRiskLeaveWork$SDRiskLeaveWorkBuilderImpl
-vn/ngs/nspace/hcm/sd/service/SDReasonLeaveService.java
- vn.ngs.nspace.hcm.sd.service.SDReasonLeaveService
-vn/ngs/nspace/hcm/sd/entities/SDFuncVariable.java
- vn.ngs.nspace.hcm.sd.entities.SDFuncVariable
- vn.ngs.nspace.hcm.sd.entities.SDFuncVariable$SDFuncVariableBuilder
- vn.ngs.nspace.hcm.sd.entities.SDFuncVariable$SDFuncVariableBuilderImpl
-vn/ngs/nspace/hcm/sd/service/impl/SDFormulaSetupServiceImpl.java
- vn.ngs.nspace.hcm.sd.service.impl.SDFormulaSetupServiceImpl
+vn/ngs/nspace/hcm/sd/entities/AffectLeaveWork.java
+ vn.ngs.nspace.hcm.sd.entities.AffectLeaveWork
+ vn.ngs.nspace.hcm.sd.entities.AffectLeaveWork$AffectLeaveWorkBuilder
+ vn.ngs.nspace.hcm.sd.entities.AffectLeaveWork$AffectLeaveWorkBuilderImpl
+vn/ngs/nspace/hcm/sd/utils/SDUtils.java
+ vn.ngs.nspace.hcm.sd.utils.SDUtils
+vn/ngs/nspace/hcm/sd/repository/CareerPathFlowQualifiedRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathFlowQualifiedRepo
+vn/ngs/nspace/hcm/sd/entities/RiskLeaveWork.java
+ vn.ngs.nspace.hcm.sd.entities.RiskLeaveWork
+ vn.ngs.nspace.hcm.sd.entities.RiskLeaveWork$RiskLeaveWorkBuilder
+ vn.ngs.nspace.hcm.sd.entities.RiskLeaveWork$RiskLeaveWorkBuilderImpl
+vn/ngs/nspace/hcm/sd/repository/CareerPathFlowEmpRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathFlowEmpRepo
+vn/ngs/nspace/hcm/sd/entities/CareerPathSetup.java
+ vn.ngs.nspace.hcm.sd.entities.CareerPathSetup
+ vn.ngs.nspace.hcm.sd.entities.CareerPathSetup$CareerPathSetupBuilder
+ vn.ngs.nspace.hcm.sd.entities.CareerPathSetup$CareerPathSetupBuilderImpl
+vn/ngs/nspace/hcm/sd/entities/HeirSetup.java
+ vn.ngs.nspace.hcm.sd.entities.HeirSetup
+ vn.ngs.nspace.hcm.sd.entities.HeirSetup$HeirSetupBuilder
+ vn.ngs.nspace.hcm.sd.entities.HeirSetup$HeirSetupBuilderImpl
+vn/ngs/nspace/hcm/sd/repository/FuncVariableRepo.java
+ vn.ngs.nspace.hcm.sd.repository.FuncVariableRepo
+vn/ngs/nspace/hcm/sd/utils/ObjectUtils.java
+ vn.ngs.nspace.hcm.sd.utils.ObjectUtils
+vn/ngs/nspace/hcm/sd/api/RiskLeaveWorkApi.java
+ vn.ngs.nspace.hcm.sd.api.RiskLeaveWorkApi
+vn/ngs/nspace/hcm/sd/repository/CareerPathSetupRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathSetupRepo
+vn/ngs/nspace/hcm/sd/Application.java
+ vn.ngs.nspace.hcm.sd.Application
+vn/ngs/nspace/hcm/sd/api/FutureLeaderApi.java
+ vn.ngs.nspace.hcm.sd.api.FutureLeaderApi
+vn/ngs/nspace/hcm/sd/service/CareerPathService.java
+ vn.ngs.nspace.hcm.sd.service.CareerPathService
+vn/ngs/nspace/hcm/sd/service/AffectLeaveWorkService.java
+ vn.ngs.nspace.hcm.sd.service.AffectLeaveWorkService
+vn/ngs/nspace/hcm/sd/repository/CareerPathFlowRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathFlowRepo
+vn/ngs/nspace/hcm/sd/service/impl/CareerPathServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.CareerPathServiceImpl
+vn/ngs/nspace/hcm/sd/repository/CareerPathRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathRepo
+vn/ngs/nspace/hcm/sd/service/impl/ReasonLeaveServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.ReasonLeaveServiceImpl
+vn/ngs/nspace/hcm/sd/service/impl/AffectLeaveWorkServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.AffectLeaveWorkServiceImpl
+vn/ngs/nspace/hcm/sd/repository/FormulaSetupRepo.java
+ vn.ngs.nspace.hcm.sd.repository.FormulaSetupRepo
+vn/ngs/nspace/hcm/sd/service/impl/FutureLeaderServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.FutureLeaderServiceImpl
+vn/ngs/nspace/hcm/sd/repository/RiskLeaveWorkRepo.java
+ vn.ngs.nspace.hcm.sd.repository.RiskLeaveWorkRepo
+vn/ngs/nspace/hcm/sd/service/impl/RiskLeaveWorkServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.RiskLeaveWorkServiceImpl
+vn/ngs/nspace/hcm/sd/repository/AffectLeaveWorkRepo.java
+ vn.ngs.nspace.hcm.sd.repository.AffectLeaveWorkRepo
+vn/ngs/nspace/hcm/sd/service/impl/FormulaSetupServiceImpl.java
+ vn.ngs.nspace.hcm.sd.service.impl.FormulaSetupServiceImpl
+vn/ngs/nspace/hcm/sd/repository/FutureLeaderRepo.java
+ vn.ngs.nspace.hcm.sd.repository.FutureLeaderRepo
+vn/ngs/nspace/hcm/sd/repository/ReasonLeaveRepo.java
+ vn.ngs.nspace.hcm.sd.repository.ReasonLeaveRepo

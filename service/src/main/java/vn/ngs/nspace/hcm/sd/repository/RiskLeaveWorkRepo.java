@@ -23,6 +23,8 @@ public interface RiskLeaveWorkRepo extends BaseRepo<RiskLeaveWork, Long> {
 
     Optional<RiskLeaveWork> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
+    Optional<RiskLeaveWork> findByCompanyIdAndId(Long cid, Long id);
+
     List<RiskLeaveWork> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
     @Query(value = "SELECT srlw FROM RiskLeaveWork AS srlw " +

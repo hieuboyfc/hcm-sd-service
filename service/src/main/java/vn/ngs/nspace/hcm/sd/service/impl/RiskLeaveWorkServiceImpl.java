@@ -56,6 +56,7 @@ public class RiskLeaveWorkServiceImpl implements RiskLeaveWorkService {
             entity.setDescription(dto.getDescription());
             entity.setIcon(dto.getIcon());
             entity.setColor(dto.getColor());
+            entity.setStatus(dto.getStatus());
             entity.setUpdateBy(uid);
             repo.save(entity);
             dtoData = RiskLeaveWork.toDTO(entity);
@@ -82,7 +83,7 @@ public class RiskLeaveWorkServiceImpl implements RiskLeaveWorkService {
 
     @Override
     public RiskLeaveWorkDTO getDetail(Long cid, String uid, Long id) {
-        Optional<RiskLeaveWork> entityOptional = repo.findByCompanyIdAndStatusAndId(cid, Constants.STATE_ACTIVE, id);
+        Optional<RiskLeaveWork> entityOptional = repo.findByCompanyIdAndId(cid, id);
         if (entityOptional.isPresent()) {
             RiskLeaveWork entity = entityOptional.get();
             return RiskLeaveWork.toDTO(entity);
@@ -99,7 +100,7 @@ public class RiskLeaveWorkServiceImpl implements RiskLeaveWorkService {
         RiskLeaveWork entity;
         if (isEdit) {
             Long id = dto.getId() != null ? dto.getId() : -1L;
-            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
+            entity = repo.findByCompanyIdAndId(cid, id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-risk-leave-work-not-found");
             }

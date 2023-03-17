@@ -20,8 +20,9 @@ import javax.persistence.*;
 @Table(
         name = SDUtils.CAREER_PATH_FLOW_QUALIFIED,
         indexes = {
-                @Index(name = "CareerPathFlowQualified_idx", columnList = "companyId, qualificationId"),
-        })
+                @Index(name = "CareerPathFlowQualified_idx", columnList = "companyId, qualifiedId"),
+        }
+)
 public class CareerPathFlowQualified extends PersistableEntity<Long> {
 
     @Id

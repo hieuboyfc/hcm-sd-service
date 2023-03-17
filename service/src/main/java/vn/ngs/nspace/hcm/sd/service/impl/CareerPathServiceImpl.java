@@ -63,7 +63,7 @@ public class CareerPathServiceImpl implements CareerPathService {
         CareerPath entity;
         if (isEdit) {
             Long id = dto.getId() != null ? dto.getId() : -1L;
-            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
+            entity = repo.findByCompanyIdAndId(cid, id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-career-path-not-found");
             }

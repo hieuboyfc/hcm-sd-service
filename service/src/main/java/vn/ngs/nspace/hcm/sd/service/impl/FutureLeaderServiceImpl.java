@@ -56,6 +56,7 @@ public class FutureLeaderServiceImpl implements FutureLeaderService {
             entity.setDescription(dto.getDescription());
             entity.setIcon(dto.getIcon());
             entity.setColor(dto.getColor());
+            entity.setStatus(dto.getStatus());
             entity.setUpdateBy(uid);
             repo.save(entity);
             dtoData = FutureLeader.toDTO(entity);
@@ -82,7 +83,7 @@ public class FutureLeaderServiceImpl implements FutureLeaderService {
 
     @Override
     public FutureLeaderDTO getDetail(Long cid, String uid, Long id) {
-        Optional<FutureLeader> entityOptional = repo.findByCompanyIdAndStatusAndId(cid, Constants.STATE_ACTIVE, id);
+        Optional<FutureLeader> entityOptional = repo.findByCompanyIdAndId(cid, id);
         if (entityOptional.isPresent()) {
             FutureLeader entity = entityOptional.get();
             return FutureLeader.toDTO(entity);
@@ -99,7 +100,7 @@ public class FutureLeaderServiceImpl implements FutureLeaderService {
         FutureLeader entity;
         if (isEdit) {
             Long id = dto.getId() != null ? dto.getId() : -1L;
-            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
+            entity = repo.findByCompanyIdAndId(cid, id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-future-leader-not-found");
             }

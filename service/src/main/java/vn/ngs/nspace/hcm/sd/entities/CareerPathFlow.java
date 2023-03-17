@@ -25,9 +25,11 @@ import java.util.stream.Collectors;
 @Table(
         name = SDUtils.CAREER_PATH_FLOW,
         indexes = {
-                @Index(name = "CareerPathFlow_idx", columnList = "companyId, path"),
-                @Index(name = "CareerPathFlowParent_idx", columnList = "companyId, parentId")
-        })
+                @Index(name = "CareerPathFlow_Path_idx", columnList = "companyId, path"),
+                @Index(name = "CareerPathFlow_Code_idx", columnList = "companyId, code"),
+                @Index(name = "CareerPathFlow_Parent_idx", columnList = "companyId, parentId")
+        }
+)
 public class CareerPathFlow extends PersistableEntity<Long> {
 
     @Id

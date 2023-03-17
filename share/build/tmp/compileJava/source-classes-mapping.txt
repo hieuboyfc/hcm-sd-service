@@ -1,23 +1,23 @@
-vn/ngs/nspace/hcm/sd/share/dto/CareerPathFlowDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.CareerPathFlowDTO
- vn.ngs.nspace.hcm.sd.share.dto.CareerPathFlowDTO$CareerPathFlowDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/AffectLeaveWorkDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.AffectLeaveWorkDTO
+ vn.ngs.nspace.hcm.sd.share.dto.AffectLeaveWorkDTO$AffectLeaveWorkDTOBuilder
 vn/ngs/nspace/hcm/sd/share/dto/CareerPathDTO.java
  vn.ngs.nspace.hcm.sd.share.dto.CareerPathDTO
  vn.ngs.nspace.hcm.sd.share.dto.CareerPathDTO$CareerPathDTOBuilder
-vn/ngs/nspace/hcm/sd/share/dto/SDFormulaSetupDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.SDFormulaSetupDTO
- vn.ngs.nspace.hcm.sd.share.dto.SDFormulaSetupDTO$SDFormulaSetupDTOBuilder
-vn/ngs/nspace/hcm/sd/share/dto/SDRiskLeaveWorkDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.SDRiskLeaveWorkDTO
- vn.ngs.nspace.hcm.sd.share.dto.SDRiskLeaveWorkDTO$SDRiskLeaveWorkDTOBuilder
-vn/ngs/nspace/hcm/sd/share/dto/SDReasonLeaveDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.SDReasonLeaveDTO
- vn.ngs.nspace.hcm.sd.share.dto.SDReasonLeaveDTO$SDReasonLeaveDTOBuilder
-vn/ngs/nspace/hcm/sd/share/dto/SDAffectLeaveWorkDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.SDAffectLeaveWorkDTO
- vn.ngs.nspace.hcm.sd.share.dto.SDAffectLeaveWorkDTO$SDAffectLeaveWorkDTOBuilder
-vn/ngs/nspace/hcm/sd/share/dto/SDFutureLeaderDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.SDFutureLeaderDTO
- vn.ngs.nspace.hcm.sd.share.dto.SDFutureLeaderDTO$SDFutureLeaderDTOBuilder
-vn/ngs/nspace/hcm/sd/share/dto/SDFuncVariableDTO.java
- vn.ngs.nspace.hcm.sd.share.dto.SDFuncVariableDTO
+vn/ngs/nspace/hcm/sd/share/dto/FutureLeaderDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.FutureLeaderDTO
+ vn.ngs.nspace.hcm.sd.share.dto.FutureLeaderDTO$FutureLeaderDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/RiskLeaveWorkDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.RiskLeaveWorkDTO
+ vn.ngs.nspace.hcm.sd.share.dto.RiskLeaveWorkDTO$RiskLeaveWorkDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/FuncVariableDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.FuncVariableDTO
+vn/ngs/nspace/hcm/sd/share/dto/FormulaSetupDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.FormulaSetupDTO
+ vn.ngs.nspace.hcm.sd.share.dto.FormulaSetupDTO$FormulaSetupDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/CareerPathFlowDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.CareerPathFlowDTO
+ vn.ngs.nspace.hcm.sd.share.dto.CareerPathFlowDTO$CareerPathFlowDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/ReasonLeaveDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.ReasonLeaveDTO
+ vn.ngs.nspace.hcm.sd.share.dto.ReasonLeaveDTO$ReasonLeaveDTOBuilder

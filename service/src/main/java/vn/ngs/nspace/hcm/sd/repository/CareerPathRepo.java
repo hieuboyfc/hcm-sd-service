@@ -9,6 +9,8 @@ import java.util.Optional;
 @Repository
 public interface CareerPathRepo extends BaseRepo<CareerPath, Long> {
 
+    Optional<CareerPath> findByCompanyIdAndId(Long cid, Long id);
+
     Optional<CareerPath> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
     Optional<CareerPath> findByCompanyIdAndStatusAndCode(Long cid, Integer status, String code);

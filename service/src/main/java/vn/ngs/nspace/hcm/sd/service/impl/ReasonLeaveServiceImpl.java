@@ -56,6 +56,7 @@ public class ReasonLeaveServiceImpl implements ReasonLeaveService {
             entity.setDescription(dto.getDescription());
             entity.setIcon(dto.getIcon());
             entity.setColor(dto.getColor());
+            entity.setStatus(dto.getStatus());
             entity.setUpdateBy(uid);
             repo.save(entity);
             dtoData = ReasonLeave.toDTO(entity);
@@ -82,7 +83,7 @@ public class ReasonLeaveServiceImpl implements ReasonLeaveService {
 
     @Override
     public ReasonLeaveDTO getDetail(Long cid, String uid, Long id) {
-        Optional<ReasonLeave> entityOptional = repo.findByCompanyIdAndStatusAndId(cid, Constants.STATE_ACTIVE, id);
+        Optional<ReasonLeave> entityOptional = repo.findByCompanyIdAndId(cid, id);
         if (entityOptional.isPresent()) {
             ReasonLeave entity = entityOptional.get();
             return ReasonLeave.toDTO(entity);
@@ -99,7 +100,7 @@ public class ReasonLeaveServiceImpl implements ReasonLeaveService {
         ReasonLeave entity;
         if (isEdit) {
             Long id = dto.getId() != null ? dto.getId() : -1L;
-            entity = repo.findByCompanyIdAndStatusAndId(cid, dto.getStatus(), id).orElse(null);
+            entity = repo.findByCompanyIdAndId(cid, id).orElse(null);
             if (entity == null) {
                 throw new BusinessException("sd-reason-leave-not-found");
             }

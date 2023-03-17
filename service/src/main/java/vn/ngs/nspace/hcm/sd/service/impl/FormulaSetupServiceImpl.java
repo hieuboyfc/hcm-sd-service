@@ -107,7 +107,7 @@ public class FormulaSetupServiceImpl implements FormulaSetupService {
 
     @Override
     public FormulaSetupDTO getDetail(Long cid, String uid, Long id) {
-        Optional<FormulaSetup> entityOptional = repo.findByCompanyIdAndStatusAndId(cid, Constants.STATE_ACTIVE, id);
+        Optional<FormulaSetup> entityOptional = repo.findByCompanyIdAndId(cid, id);
         if (entityOptional.isPresent()) {
             FormulaSetup entity = entityOptional.get();
             return FormulaSetup.toDTO(entity);
@@ -200,9 +200,7 @@ public class FormulaSetupServiceImpl implements FormulaSetupService {
 
         FormulaSetup sdFormulaSetup;
         if (isEdit) {
-            sdFormulaSetup = repo
-                    .findByCompanyIdAndStatusAndId(cid, Constants.STATE_ACTIVE, dto.getId())
-                    .orElse(null);
+            sdFormulaSetup = repo.findByCompanyIdAndId(cid, dto.getId()).orElse(null);
             if (sdFormulaSetup == null) {
                 throw new BusinessException("sd-formula-setup-not-found");
             }

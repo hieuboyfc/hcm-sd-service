@@ -24,7 +24,7 @@ public class ReasonLeaveServiceImpl implements ReasonLeaveService {
     private final ReasonLeaveRepo repo;
 
     @Override
-    public Page<ReasonLeaveDTO> getList(long cid, String uid, String search, Pageable pageable) {
+    public Page<ReasonLeaveDTO> getList(Long cid, String uid, String search, Pageable pageable) {
         Page<ReasonLeave> listPages = repo.getListReasonLeave(cid, search, pageable);
         List<ReasonLeaveDTO> listDTOs = ReasonLeave.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());

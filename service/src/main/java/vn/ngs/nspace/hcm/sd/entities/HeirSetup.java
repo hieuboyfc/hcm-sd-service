@@ -1,5 +1,6 @@
 package vn.ngs.nspace.hcm.sd.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.xdp.lib.models.PersistableEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,26 +30,30 @@ public class HeirSetup extends PersistableEntity<Long> {
     @GeneratedValue(generator = "id")
     private Long id;
 
-    private Boolean percentLevel;
+    // - Cài đặt danh sách gợi ý người kế nhiệm -> Bao gồm:
+    // + Mức độ phù hợp
+    // + Phần trăm phù hợp
+    @Column(length = 300)
+    @JsonProperty(value = "suggestSuccessor")
+    private String suggestSuccessor;
 
-    private Double percentLevelFrom; // Mức độ phần trăm phù hơn từ
+    // - Cài đặt thứ tự hiển thị người kế nhiệm -> Bao gồm:
+    // + Theo thứ hạng
+    // + Mức độ sẵn sàng
+    // + Theo mức độ sẵn sàng, thứ hạng
+    @Column(length = 300)
+    @JsonProperty(value = "displaySuccessor")
+    private String displaySuccessor;
 
-    private Double percentLevelTo; // Mức độ phần trăm phù hơn đến
-
-    private Boolean qualification; // Năng lực
-
-    private Boolean talentReview; // Đánh giá tài năng
-
-    private Boolean workProcess; // Quá trình công tác
-
-    private Boolean literacy; // Trình độ học vấn
-
-    private Boolean resultReview; // Kết quả đánh giá
-
-    private Boolean warehouseTalent; // Kho tài năng
-
-    private Boolean sortByRank; // Theo thứ hạng, mức độ sẵn sàng
-
-    private Boolean sortByDegree; // Theo mức độ sẵn sàng, thứ hạng
+    // - Cài đặt hiển thị trên thẻ tài năng -> Bao gồm:
+    // + Năng lực
+    // + Đánh giá tài năng
+    // + Quá trình công tác
+    // + Trình độ học vấn
+    // + Kết quả đánh giá
+    // + Kho tài năng
+    @Column(length = 1000)
+    @JsonProperty(value = "displayTalentCard")
+    private String displayTalentCard;
 
 }

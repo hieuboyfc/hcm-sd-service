@@ -15,6 +15,12 @@ public interface FutureLeaderRepo extends BaseRepo<FutureLeader, Long> {
 
     @Query(value = "SELECT sfl FROM FutureLeader AS sfl " +
             "WHERE sfl.companyId = :cid " +
+            "AND CONCAT(COALESCE(LOWER(sfl.code), ''), COALESCE(LOWER(sfl.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
+            "ORDER BY sfl.name, sfl.code ASC ")
+    Page<FutureLeader> getListFutureLeader(Long cid, String search, Pageable pageable);
+
+    @Query(value = "SELECT sfl FROM FutureLeader AS sfl " +
+            "WHERE sfl.companyId = :cid " +
             "   AND (sfl.id <> :id OR -1 = :id)  " +
             "   AND sfl.status = :status ")
     FutureLeader findByIdExists(Long cid, Integer status, Long id);
@@ -26,11 +32,5 @@ public interface FutureLeaderRepo extends BaseRepo<FutureLeader, Long> {
     Optional<FutureLeader> findByCompanyIdAndId(Long cid, Long id);
 
     List<FutureLeader> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
-
-    @Query(value = "SELECT sfl FROM FutureLeader AS sfl " +
-            "WHERE sfl.companyId = :cid " +
-            "AND CONCAT(COALESCE(LOWER(sfl.code), ''), COALESCE(LOWER(sfl.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
-            "ORDER BY sfl.name, sfl.code ASC ")
-    Page<FutureLeader> getListFutureLeader(Long cid, String search, Pageable pageable);
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RiskLeaveWorkService {
 
-    Page<RiskLeaveWorkDTO> getList(long cid, String uid, String search, Pageable pageable);
+    Page<RiskLeaveWorkDTO> getList(Long cid, String uid, String search, Pageable pageable);
 
     RiskLeaveWorkDTO create(Long cid, String uid, RiskLeaveWorkDTO dto);
 

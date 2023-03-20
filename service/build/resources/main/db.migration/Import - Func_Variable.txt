@@ -1,0 +1,33 @@
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(1, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'f(x): Fsum', '(Tính tổng tất cả các số hạng sau dấu ".")', 1);
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(2, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'f(x): Fcounta', '(Tính tổng tất cả các số hạng sau dấu ".")', 1);
+
+-------
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(3, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'Rate.ee', '(Số điểm năng lực của CBNV)', 2);
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(4, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'Rate.pos', '(Số điểm năng lực của vị trí cần so sánh)', 2);
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(5, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'Weight.pos', '(Trọng số năng lực của vị trí cần so sánh)', 2);
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(6, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'Level.ee', '(Cấp độ năng lực của CBNV)', 2);
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(7, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'Level.pos', '(Cấp độ năng lực của vị trí cần so sánh)', 2);
+
+INSERT INTO hcm_sd_service.func_variable
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, name, "type")
+VALUES(8, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 1, 'system', 0, 'Com.pos', '(Năng lực của vị trí cần so sánh là cốt lõi thì trả về 1. Nếu không, trả về 0)', 2);

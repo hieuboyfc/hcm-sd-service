@@ -24,7 +24,7 @@ public class RiskLeaveWorkServiceImpl implements RiskLeaveWorkService {
     private final RiskLeaveWorkRepo repo;
 
     @Override
-    public Page<RiskLeaveWorkDTO> getList(long cid, String uid, String search, Pageable pageable) {
+    public Page<RiskLeaveWorkDTO> getList(Long cid, String uid, String search, Pageable pageable) {
         Page<RiskLeaveWork> listPages = repo.getListRiskLeaveWork(cid, search, pageable);
         List<RiskLeaveWorkDTO> listDTOs = RiskLeaveWork.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());

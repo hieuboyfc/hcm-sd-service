@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReasonLeaveService {
 
-    Page<ReasonLeaveDTO> getList(long cid, String uid, String search, Pageable pageable);
+    Page<ReasonLeaveDTO> getList(Long cid, String uid, String search, Pageable pageable);
 
     ReasonLeaveDTO create(Long cid, String uid, ReasonLeaveDTO dto);
 

@@ -24,7 +24,7 @@ public class FutureLeaderServiceImpl implements FutureLeaderService {
     private final FutureLeaderRepo repo;
 
     @Override
-    public Page<FutureLeaderDTO> getList(long cid, String uid, String search, Pageable pageable) {
+    public Page<FutureLeaderDTO> getList(Long cid, String uid, String search, Pageable pageable) {
         Page<FutureLeader> listPages = repo.getListFutureLeader(cid, search, pageable);
         List<FutureLeaderDTO> listDTOs = FutureLeader.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());

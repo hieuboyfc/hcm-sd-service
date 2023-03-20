@@ -21,3 +21,8 @@ vn/ngs/nspace/hcm/sd/share/dto/CareerPathFlowDTO.java
 vn/ngs/nspace/hcm/sd/share/dto/ReasonLeaveDTO.java
  vn.ngs.nspace.hcm.sd.share.dto.ReasonLeaveDTO
  vn.ngs.nspace.hcm.sd.share.dto.ReasonLeaveDTO$ReasonLeaveDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/CareerPathSetupDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.CareerPathSetupDTO
+ vn.ngs.nspace.hcm.sd.share.dto.CareerPathSetupDTO$CareerPathSetupDTOBuilder
+vn/ngs/nspace/hcm/sd/share/dto/HeirSetupDTO.java
+ vn.ngs.nspace.hcm.sd.share.dto.HeirSetupDTO

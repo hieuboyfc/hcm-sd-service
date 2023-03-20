@@ -24,7 +24,7 @@ public class AffectLeaveWorkServiceImpl implements AffectLeaveWorkService {
     private final AffectLeaveWorkRepo repo;
 
     @Override
-    public Page<AffectLeaveWorkDTO> getList(long cid, String uid, String search, Pageable pageable) {
+    public Page<AffectLeaveWorkDTO> getList(Long cid, String uid, String search, Pageable pageable) {
         Page<AffectLeaveWork> listPages = repo.getListAffectLeaveWork(cid, search, pageable);
         List<AffectLeaveWorkDTO> listDTOs = AffectLeaveWork.toDTOs(listPages.getContent());
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());

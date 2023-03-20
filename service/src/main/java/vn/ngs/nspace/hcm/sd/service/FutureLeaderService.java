@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface FutureLeaderService {
 
-    Page<FutureLeaderDTO> getList(long cid, String uid, String search, Pageable pageable);
+    Page<FutureLeaderDTO> getList(Long cid, String uid, String search, Pageable pageable);
 
     FutureLeaderDTO create(Long cid, String uid, FutureLeaderDTO dto);
 

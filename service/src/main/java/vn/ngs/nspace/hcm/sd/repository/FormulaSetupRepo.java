@@ -43,4 +43,5 @@ public interface FormulaSetupRepo extends BaseRepo<FormulaSetup, Long> {
     Optional<FormulaSetup> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
     List<FormulaSetup> findAllByCompanyIdAndStatusAndIdIn(Long cid, Integer status, List<Long> ids);
+
 }

@@ -15,6 +15,12 @@ public interface ReasonLeaveRepo extends BaseRepo<ReasonLeave, Long> {
 
     @Query(value = "SELECT srl FROM ReasonLeave AS srl " +
             "WHERE srl.companyId = :cid " +
+            "AND CONCAT(COALESCE(LOWER(srl.code), ''), COALESCE(LOWER(srl.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
+            "ORDER BY srl.name, srl.code ASC ")
+    Page<ReasonLeave> getListReasonLeave(Long cid, String search, Pageable pageable);
+
+    @Query(value = "SELECT srl FROM ReasonLeave AS srl " +
+            "WHERE srl.companyId = :cid " +
             "   AND (srl.id <> :id OR -1 = :id)  " +
             "   AND srl.status = :status ")
     ReasonLeave findByIdExists(Long cid, Integer status, Long id);
@@ -26,11 +32,5 @@ public interface ReasonLeaveRepo extends BaseRepo<ReasonLeave, Long> {
     Optional<ReasonLeave> findByCompanyIdAndId(Long cid, Long id);
 
     List<ReasonLeave> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
-
-    @Query(value = "SELECT srl FROM ReasonLeave AS srl " +
-            "WHERE srl.companyId = :cid " +
-            "AND CONCAT(COALESCE(LOWER(srl.code), ''), COALESCE(LOWER(srl.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
-            "ORDER BY srl.name, srl.code ASC ")
-    Page<ReasonLeave> getListReasonLeave(Long cid, String search, Pageable pageable);
 
 }

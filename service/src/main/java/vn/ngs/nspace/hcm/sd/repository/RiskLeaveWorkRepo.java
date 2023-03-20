@@ -15,6 +15,12 @@ public interface RiskLeaveWorkRepo extends BaseRepo<RiskLeaveWork, Long> {
 
     @Query(value = "SELECT srlw FROM RiskLeaveWork AS srlw " +
             "WHERE srlw.companyId = :cid " +
+            "AND CONCAT(COALESCE(LOWER(srlw.code), ''), COALESCE(LOWER(srlw.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
+            "ORDER BY srlw.name, srlw.code ASC ")
+    Page<RiskLeaveWork> getListRiskLeaveWork(Long cid, String search, Pageable pageable);
+
+    @Query(value = "SELECT srlw FROM RiskLeaveWork AS srlw " +
+            "WHERE srlw.companyId = :cid " +
             "   AND (srlw.id <> :id OR -1 = :id)  " +
             "   AND srlw.status = :status ")
     RiskLeaveWork findByIdExists(Long cid, Integer status, Long id);
@@ -26,11 +32,5 @@ public interface RiskLeaveWorkRepo extends BaseRepo<RiskLeaveWork, Long> {
     Optional<RiskLeaveWork> findByCompanyIdAndId(Long cid, Long id);
 
     List<RiskLeaveWork> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
-
-    @Query(value = "SELECT srlw FROM RiskLeaveWork AS srlw " +
-            "WHERE srlw.companyId = :cid " +
-            "AND CONCAT(COALESCE(LOWER(srlw.code), ''), COALESCE(LOWER(srlw.name), '')) LIKE CONCAT('%', COALESCE(LOWER(:search), ''), '%') " +
-            "ORDER BY srlw.name, srlw.code ASC ")
-    Page<RiskLeaveWork> getListRiskLeaveWork(Long cid, String search, Pageable pageable);
 
 }

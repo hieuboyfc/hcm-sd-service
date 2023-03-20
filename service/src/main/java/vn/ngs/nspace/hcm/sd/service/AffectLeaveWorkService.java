@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AffectLeaveWorkService {
 
-    Page<AffectLeaveWorkDTO> getList(long cid, String uid, String search, Pageable pageable);
+    Page<AffectLeaveWorkDTO> getList(Long cid, String uid, String search, Pageable pageable);
 
     AffectLeaveWorkDTO create(Long cid, String uid, AffectLeaveWorkDTO dto);
 

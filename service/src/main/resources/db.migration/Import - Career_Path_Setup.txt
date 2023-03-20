@@ -1,0 +1,11 @@
+INSERT INTO hcm_sd_service.career_path_setup
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, "name", color, icon, "type")
+VALUES(1, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 0, 'system', 0, 'HB01', 'Số lượng năng lực cần thiết cho vị trí hiện tại', 'red', '', 1);
+
+INSERT INTO hcm_sd_service.career_path_setup
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, "name", color, icon, "type")
+VALUES(2, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 0, 'system', 0, 'HB02', 'Số lượng CBNV đang giữ vị trí đó', 'red', '', 1);
+
+INSERT INTO hcm_sd_service.career_path_setup
+(id, company_id, create_by, create_date, modified_date, status, update_by, "version", code, "name", color, icon, "type")
+VALUES(3, 137, 'system', '2023-03-21 17:30:30.000', '2023-03-21 17:30:30.000', 0, 'system', 0, 'HB03', 'Mã vị trí công việc', 'red', '', 1);

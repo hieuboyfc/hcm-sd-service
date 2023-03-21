@@ -10,9 +10,8 @@ import vn.ngs.nspace.hcm.sd.share.dto.CareerPathFlowDTO;
 import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -37,10 +36,10 @@ public class CareerPathFlow extends PersistableEntity<Long> {
     @GeneratedValue(generator = "id")
     private Long id;
 
-    @Column(length = 8)
+    @Column(length = 8, nullable = false)
     private String code;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
     private Long careerPathId;
@@ -60,19 +59,37 @@ public class CareerPathFlow extends PersistableEntity<Long> {
     @Column(length = 300)
     private String description;
 
+    @Transient
+    private List<CareerPathFlow> children;
+
     public static CareerPathFlow of(CareerPathFlowDTO dto) {
         CareerPathFlow entity = new CareerPathFlow();
         MapperUtils.copyWithoutAudit(dto, entity);
         return entity;
     }
 
-    public static CareerPathFlowDTO toDTO(CareerPathFlow entity) {
+    public static CareerPathFlowDTO toDTO(CareerPathFlow entity, CareerPathFlow parent) {
         CareerPathFlowDTO dto = new CareerPathFlowDTO();
         MapperUtils.copy(entity, dto);
+        CareerPathFlowDTO parentDTO = new CareerPathFlowDTO();
+        if (parent != null) {
+            MapperUtils.copy(parent, parentDTO);
+            dto.setParent(parentDTO);
+        }
         return dto;
     }
 
     public static List<CareerPathFlowDTO> toDTOs(List<CareerPathFlow> entities) {
-        return entities.stream().map(CareerPathFlow::toDTO).collect(Collectors.toList());
+        List<CareerPathFlowDTO> listDTOs = new ArrayList<>();
+        entities.forEach(item -> {
+            CareerPathFlow parent = entities
+                    .stream()
+                    .filter(o -> item.getParentId().equals(o.getId()))
+                    .findFirst()
+                    .orElse(null);
+            CareerPathFlowDTO dto = toDTO(item, parent);
+            listDTOs.add(dto);
+        });
+        return listDTOs;
     }
 }

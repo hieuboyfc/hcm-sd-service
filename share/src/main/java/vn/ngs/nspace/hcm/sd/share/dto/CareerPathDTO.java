@@ -17,6 +17,9 @@ public class CareerPathDTO {
     private String name;
     private Long orgId;
     private String description;
+    private String search;
+    private Date startDate;
+    private Date endDate;
     private List<CareerPathFlowDTO> careerPathFlowDTOS;
 
     private Date createDate;

@@ -3,6 +3,7 @@ package vn.ngs.nspace.hcm.sd.share.dto;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,6 +22,8 @@ public class CareerPathFlowDTO {
     private String path;
     private String pathName;
     private String description;
+    private CareerPathFlowDTO parent;
+    private List<CareerPathFlowDTO> children;
 
     private Date createDate;
     private Date modifiedDate;

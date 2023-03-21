@@ -50,6 +50,8 @@ public class CareerPath extends PersistableEntity<Long> {
 
     public static CareerPath of(Long cid, String uid, CareerPathDTO dto) {
         CareerPath entity = new CareerPath();
+        entity.setCompanyId(cid);
+        entity.setUpdateBy(uid);
         MapperUtils.copyWithoutAudit(dto, entity);
         return entity;
     }

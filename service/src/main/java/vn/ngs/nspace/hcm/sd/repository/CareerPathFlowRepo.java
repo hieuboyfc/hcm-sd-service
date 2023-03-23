@@ -34,4 +34,8 @@ public interface CareerPathFlowRepo extends BaseRepo<CareerPathFlow, Long> {
     List<CareerPathFlow> getChildByPath(@Param("cid") Long cid,
                                         @Param("careerPathId") Long careerPathId);
 
+    List<CareerPathFlow> findAllByCompanyIdAndCareerPathId(Long cid, Long careerPathId);
+
+    List<CareerPathFlow> findAllByCompanyIdAndCareerPathIdIn(Long cid, List<Long> ids);
+
 }

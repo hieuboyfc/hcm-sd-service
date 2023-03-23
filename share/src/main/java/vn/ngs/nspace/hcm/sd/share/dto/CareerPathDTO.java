@@ -20,6 +20,7 @@ public class CareerPathDTO {
     private String search;
     private Date startDate;
     private Date endDate;
+    private Integer totalStep;
     private List<CareerPathFlowDTO> careerPathFlowDTOS;
 
     private Date createDate;

@@ -20,7 +20,7 @@ public interface FormulaSetupRepo extends BaseRepo<FormulaSetup, Long> {
             "           AND sfs.status = :status " +
             "           AND sfs.startDate <= :endDate " +
             "           AND sfs.endDate >= :startDate " +
-            "           AND CONCAT(LOWER(COALESCE(sfs.name, '')), LOWER(COALESCE(sfs.code, ''))) LIKE LOWER(:search) ")
+            "           AND CONCAT(LOWER(COALESCE(sfs.code, '')), LOWER(COALESCE(sfs.name, ''))) LIKE LOWER(:search) ")
     Page<FormulaSetup> search(@Param("cid") Long cid,
                               @Param("status") Integer status,
                               @Param("startDate") Date startDate,

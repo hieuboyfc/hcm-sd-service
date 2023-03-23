@@ -27,4 +27,36 @@ public class SDUtils {
     public static final String CHECK_CONTRACT = "checkContract";
     public static final String CHECK_ACTION = "checkAction";
 
+    public static class Symbol {
+        private Symbol() {
+        }
+
+        public static final String COMMA = ",";
+        public static final String ASTERISK = "*";
+        public static final String SPACE = " ";
+        public static final String UNDERSCORE = "_";
+        public static final String QUESTION_MARK = "?";
+        public static final String SLASH = "/";
+        public static final String SHARP = "#";
+        public static final String NULL = "NULL";
+        public static final String EMPTY = "";
+        public static final String DOT = ".";
+    }
+
+    public static class Number {
+        private Number() {
+        }
+
+        public static final int _0 = 0;
+        public static final int _1 = 1;
+        public static final int _2 = 2;
+        public static final int _3 = 3;
+        public static final int _4 = 4;
+        public static final int _5 = 5;
+        public static final int _6 = 6;
+        public static final int _7 = 7;
+        public static final int _8 = 8;
+        public static final int _9 = 9;
+    }
+
 }

@@ -10,9 +10,6 @@ import vn.ngs.nspace.hcm.sd.share.dto.CareerPathDTO;
 import vn.ngs.nspace.hcm.sd.utils.SDUtils;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,11 +45,10 @@ public class CareerPath extends PersistableEntity<Long> {
     @Column(length = 300)
     private String description;
 
-    public static CareerPath of(Long cid, String uid, CareerPathDTO dto) {
+    public static CareerPath of(Long cid, CareerPathDTO dto) {
         CareerPath entity = new CareerPath();
-        entity.setCompanyId(cid);
-        entity.setUpdateBy(uid);
         MapperUtils.copyWithoutAudit(dto, entity);
+        entity.setCompanyId(cid);
         return entity;
     }
 

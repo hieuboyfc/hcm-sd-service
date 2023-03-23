@@ -59,12 +59,10 @@ public class CareerPathFlow extends PersistableEntity<Long> {
     @Column(length = 300)
     private String description;
 
-    @Transient
-    private List<CareerPathFlow> children;
-
-    public static CareerPathFlow of(CareerPathFlowDTO dto) {
+    public static CareerPathFlow of(Long cid, CareerPathFlowDTO dto) {
         CareerPathFlow entity = new CareerPathFlow();
         MapperUtils.copyWithoutAudit(dto, entity);
+        entity.setCompanyId(cid);
         return entity;
     }
 

@@ -25,19 +25,17 @@ public class CareerPathApi {
 
     private final CareerPathService service;
 
-    @GetMapping("/list")
-    @Operation(summary = "Get List - SD Career Path", description = "Get List - SD Career Path", tags = {"CareerPath"})
+    @PostMapping("/search")
     @ActionMapping(action = Permission.VIEW)
+    @Operation(summary = "Search - SD Career Path", description = "Search - SD Career Path", tags = {"CareerPath"})
     @Parameter(in = ParameterIn.HEADER, description = "Addition Key to bypass authen", name = "key",
             schema = @Schema(implementation = String.class))
-    public ResponseEntity<?> getList(@Parameter(description = "Id of Company") @RequestHeader Long cid,
-                                     @Parameter(description = "Id of User") @RequestHeader String uid,
-                                     @Parameter(description = "Payload variable value")
-                                     @RequestParam(name = "search", defaultValue = "") String search,
-                                     Pageable pageable) {
+    public ResponseEntity<?> search(@Parameter(description = "Id of Company") @RequestHeader("cid") long cid,
+                                    @Parameter(description = "Id of User") @RequestHeader("uid") String uid,
+                                    @Parameter(description = "Payload variable value") @RequestBody CareerPathDTO dto,
+                                    Pageable pageable) {
         try {
-            //return ResponseUtils.handlerSuccess(service.getList(cid, uid, search, pageable));
-            return null;
+            return ResponseUtils.handlerSuccess(service.search(cid, uid, dto, pageable));
         } catch (Exception e) {
             return ResponseUtils.handlerException(e);
         }

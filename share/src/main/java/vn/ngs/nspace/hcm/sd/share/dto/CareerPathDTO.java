@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @NoArgsConstructor
@@ -22,6 +23,8 @@ public class CareerPathDTO {
     private Date endDate;
     private Integer totalStep;
     private List<CareerPathFlowDTO> careerPathFlowDTOS;
+    private List<CareerPathFlowDTO> updateCareerPathFlowDTOS;
+    private List<Map<String, Object>> deleteCareerPathFlowDTOs;
 
     private Date createDate;
     private Date modifiedDate;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import vn.ngs.nspace.hcm.sd.entities.CareerPath;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -32,6 +33,10 @@ public interface CareerPathRepo extends BaseRepo<CareerPath, Long> {
 
     Optional<CareerPath> findByCompanyIdAndStatusAndId(Long cid, Integer status, Long id);
 
-    Optional<CareerPath> findByCompanyIdAndStatusAndCode(Long cid, Integer status, String code);
+    Optional<CareerPath> findByCompanyIdAndCode(Long cid, String code);
+
+    List<CareerPath> findAllByCompanyIdAndCode(Long cid, String code);
+
+    List<CareerPath> findAllByCompanyIdAndIdIn(Long cid, List<Long> ids);
 
 }

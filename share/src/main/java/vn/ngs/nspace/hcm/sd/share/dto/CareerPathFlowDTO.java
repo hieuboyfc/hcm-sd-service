@@ -23,7 +23,10 @@ public class CareerPathFlowDTO {
     private String pathName;
     private String description;
     private CareerPathFlowDTO parent;
+    private List<Long> empIds;
+    private List<Long> qualifiedIds;
     private List<CareerPathFlowDTO> children;
+    private Boolean expanded = false;
 
     private Date createDate;
     private Date modifiedDate;

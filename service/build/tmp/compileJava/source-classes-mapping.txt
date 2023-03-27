@@ -42,8 +42,8 @@ vn/ngs/nspace/hcm/sd/entities/CareerPathSetup.java
  vn.ngs.nspace.hcm.sd.entities.CareerPathSetup
  vn.ngs.nspace.hcm.sd.entities.CareerPathSetup$CareerPathSetupBuilder
  vn.ngs.nspace.hcm.sd.entities.CareerPathSetup$CareerPathSetupBuilderImpl
-vn/ngs/nspace/hcm/sd/repository/CareerPathFlowQualifiedRepo.java
- vn.ngs.nspace.hcm.sd.repository.CareerPathFlowQualifiedRepo
+vn/ngs/nspace/hcm/sd/repository/CareerPathRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathRepo
 vn/ngs/nspace/hcm/sd/entities/FormulaSetup.java
  vn.ngs.nspace.hcm.sd.entities.FormulaSetup
  vn.ngs.nspace.hcm.sd.entities.FormulaSetup$FormulaSetupBuilder
@@ -102,10 +102,8 @@ vn/ngs/nspace/hcm/sd/entities/HeirSetup.java
  vn.ngs.nspace.hcm.sd.entities.HeirSetup
  vn.ngs.nspace.hcm.sd.entities.HeirSetup$HeirSetupBuilder
  vn.ngs.nspace.hcm.sd.entities.HeirSetup$HeirSetupBuilderImpl
-vn/ngs/nspace/hcm/sd/entities/CareerPathFlow.java
- vn.ngs.nspace.hcm.sd.entities.CareerPathFlow
- vn.ngs.nspace.hcm.sd.entities.CareerPathFlow$CareerPathFlowBuilder
- vn.ngs.nspace.hcm.sd.entities.CareerPathFlow$CareerPathFlowBuilderImpl
+vn/ngs/nspace/hcm/sd/utils/ObjectUtils.java
+ vn.ngs.nspace.hcm.sd.utils.ObjectUtils
 vn/ngs/nspace/hcm/sd/service/impl/HeirSetupServiceImpl.java
  vn.ngs.nspace.hcm.sd.service.impl.HeirSetupServiceImpl
 vn/ngs/nspace/hcm/sd/repository/RiskLeaveWorkRepo.java
@@ -116,19 +114,21 @@ vn/ngs/nspace/hcm/sd/api/FutureLeaderApi.java
  vn.ngs.nspace.hcm.sd.api.FutureLeaderApi
 vn/ngs/nspace/hcm/sd/repository/FutureLeaderRepo.java
  vn.ngs.nspace.hcm.sd.repository.FutureLeaderRepo
-vn/ngs/nspace/hcm/sd/repository/CareerPathRepo.java
- vn.ngs.nspace.hcm.sd.repository.CareerPathRepo
+vn/ngs/nspace/hcm/sd/repository/CareerPathFlowQualifiedRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathFlowQualifiedRepo
+vn/ngs/nspace/hcm/sd/entities/CareerPathFlow.java
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlow
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlow$CareerPathFlowBuilder
+ vn.ngs.nspace.hcm.sd.entities.CareerPathFlow$CareerPathFlowBuilderImpl
+vn/ngs/nspace/hcm/sd/repository/CareerPathFlowRepo.java
+ vn.ngs.nspace.hcm.sd.repository.CareerPathFlowRepo
 vn/ngs/nspace/hcm/sd/service/CareerPathService.java
  vn.ngs.nspace.hcm.sd.service.CareerPathService
 vn/ngs/nspace/hcm/sd/entities/CareerPath.java
  vn.ngs.nspace.hcm.sd.entities.CareerPath
  vn.ngs.nspace.hcm.sd.entities.CareerPath$CareerPathBuilder
  vn.ngs.nspace.hcm.sd.entities.CareerPath$CareerPathBuilderImpl
-vn/ngs/nspace/hcm/sd/utils/ObjectUtils.java
- vn.ngs.nspace.hcm.sd.utils.ObjectUtils
 vn/ngs/nspace/hcm/sd/api/CareerPathApi.java
  vn.ngs.nspace.hcm.sd.api.CareerPathApi
-vn/ngs/nspace/hcm/sd/repository/CareerPathFlowRepo.java
- vn.ngs.nspace.hcm.sd.repository.CareerPathFlowRepo
 vn/ngs/nspace/hcm/sd/service/impl/CareerPathServiceImpl.java
  vn.ngs.nspace.hcm.sd.service.impl.CareerPathServiceImpl

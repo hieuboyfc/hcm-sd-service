@@ -2,6 +2,7 @@ package com.xdp.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class CareerPathFlowDTO {
     private CareerPathFlowDTO parent;
     private List<Long> empIds;
     private List<Long> qualifiedIds;
-    private List<CareerPathFlowDTO> children;
-    private List<EmployeeDTO> employeeDTOS;
+    private List<CareerPathFlowDTO> children = new ArrayList<>();
+    private List<EmployeeDTO> employeeDTOS = new ArrayList<>();
     private Integer totalEmployee;
     private Boolean expanded;
 

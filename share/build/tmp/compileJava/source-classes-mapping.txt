@@ -15,9 +15,9 @@ com/xdp/dto/AffectLeaveWorkDTO.java
 com/xdp/dto/CareerPathSetupDTO.java
  com.xdp.dto.CareerPathSetupDTO
  com.xdp.dto.CareerPathSetupDTO$CareerPathSetupDTOBuilder
-com/xdp/dto/PositionDTO.java
- com.xdp.dto.PositionDTO
- com.xdp.dto.PositionDTO$PositionDTOBuilder
+com/xdp/dto/RiskLeaveWorkDTO.java
+ com.xdp.dto.RiskLeaveWorkDTO
+ com.xdp.dto.RiskLeaveWorkDTO$RiskLeaveWorkDTOBuilder
 com/xdp/dto/FormulaSetupDTO.java
  com.xdp.dto.FormulaSetupDTO
  com.xdp.dto.FormulaSetupDTO$FormulaSetupDTOBuilder
@@ -26,9 +26,9 @@ com/xdp/dto/CareerPathDTO.java
  com.xdp.dto.CareerPathDTO$CareerPathDTOBuilder
 com/xdp/dto/FuncVariableDTO.java
  com.xdp.dto.FuncVariableDTO
-com/xdp/dto/RiskLeaveWorkDTO.java
- com.xdp.dto.RiskLeaveWorkDTO
- com.xdp.dto.RiskLeaveWorkDTO$RiskLeaveWorkDTOBuilder
+com/xdp/dto/PositionDTO.java
+ com.xdp.dto.PositionDTO
+ com.xdp.dto.PositionDTO$PositionDTOBuilder
 com/xdp/dto/CareerPathFlowDTO.java
  com.xdp.dto.CareerPathFlowDTO
  com.xdp.dto.CareerPathFlowDTO$CareerPathFlowDTOBuilder

@@ -87,6 +87,21 @@ public class CareerPathApi {
         }
     }
 
+    @PutMapping("/refresh")
+    @ActionMapping(action = Permission.UPDATE)
+    @Operation(summary = "Refresh - SD Career Path", description = "Refresh - SD Career Path", tags = {"CareerPath"})
+    @Parameter(in = ParameterIn.HEADER, description = "Addition Key to bypass authen", name = "key",
+            schema = @Schema(implementation = String.class))
+    protected ResponseEntity<?> refresh(@Parameter(description = "Id of Company") @RequestHeader Long cid,
+                                        @Parameter(description = "Id of User") @RequestHeader String uid,
+                                        @Parameter(description = "Payload variable value") @RequestParam(name = "id") Long id) {
+        try {
+            return ResponseUtils.handlerSuccess(service.refresh(cid, uid, id));
+        } catch (Exception e) {
+            return ResponseUtils.handlerException(e);
+        }
+    }
+
     @GetMapping("/get-detail")
     @ActionMapping(action = Permission.VIEW)
     @Operation(summary = "Get Detail - SD Career Path", description = "Get Detail - SD Career Path", tags = {"CareerPath"})

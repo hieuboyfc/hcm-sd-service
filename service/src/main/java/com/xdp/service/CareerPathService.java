@@ -16,6 +16,8 @@ public interface CareerPathService {
 
     void delete(Long cid, String uid, List<Long> ids);
 
+    CareerPathDTO refresh(Long cid, String uid, Long id);
+
     CareerPathDTO getDetail(Long cid, String uid, Long id);
 
 }

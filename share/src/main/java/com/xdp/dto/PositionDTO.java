@@ -2,6 +2,7 @@ package com.xdp.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,5 +17,6 @@ public class PositionDTO {
     private String name;
     private Integer status;
 
-    private List<EmployeeDTO> employeeDTOS;
+    private List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+    private Integer totalEmployee;
 }

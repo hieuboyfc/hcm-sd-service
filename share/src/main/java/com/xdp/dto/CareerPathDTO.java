@@ -2,6 +2,7 @@ package com.xdp.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -22,9 +23,9 @@ public class CareerPathDTO {
     private Date startDate;
     private Date endDate;
     private Integer totalStep;
-    private List<CareerPathFlowDTO> careerPathFlowDTOS;
-    private List<CareerPathFlowDTO> updateCareerPathFlowDTOS;
-    private List<Map<String, Object>> deleteCareerPathFlowDTOs;
+    private List<CareerPathFlowDTO> careerPathFlowDTOS = new ArrayList<>();
+    private List<CareerPathFlowDTO> updateCareerPathFlowDTOS = new ArrayList<>();
+    private List<Map<String, Object>> deleteCareerPathFlowDTOs = new ArrayList<>();
 
     private Date createDate;
     private Date modifiedDate;

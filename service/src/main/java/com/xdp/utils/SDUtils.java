@@ -27,6 +27,19 @@ public class SDUtils {
     public static final String CHECK_CONTRACT = "checkContract";
     public static final String CHECK_ACTION = "checkAction";
 
+    public static class NameMethod {
+        private NameMethod() {
+
+        }
+
+        public static final String SEARCH = "search";
+        public static final String CREATE = "create";
+        public static final String UPDATE = "update";
+        public static final String DELETE = "delete";
+        public static final String GET_DETAIL = "getDetail";
+        public static final String REFRESH = "refresh";
+    }
+
     public static class Symbol {
         private Symbol() {
         }

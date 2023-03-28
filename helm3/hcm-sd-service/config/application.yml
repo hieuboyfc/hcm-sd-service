@@ -10,8 +10,9 @@ spring:
   jackson:
     date-format: ${DATE_FORMAT}
     time-zone: ${TZ}
+    default-property-inclusion: non_null
   application:
-    name: hcm-sd
+    name: hcm-sd-service
   output:
     ansi:
       enabled: never
@@ -46,7 +47,7 @@ spring:
     enabled: false
   kafka:
     bootstrap-servers: ${KAFKA_URL}
-    group: hcm_sd_service
+    group: hcm-sd
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
@@ -83,14 +84,17 @@ cache:
   expries: 5
   expireAfter: write
 nspace:
+  scheduleTopic: hcm-sd-schedule
+  sync-service: md-service
   token: 1
   policy: false
   cache:
     config: ${REDIS_CONFIG}
     expires: 0
     expireAfter: write
-  application: hcm_sd_service
-  hcm_payroll_topic : hcm_sd_service
+  application: "hcm-sd"
+  configType: '{"emp_form":{"type":["LEAVE"],"default":"LEAVE"}}'
+  configInvolve: '{"emp_form":{"LEAVE":["RESPONSIBLE","OBSERVER"]}}'
   service:
     task:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"0"}'
@@ -115,13 +119,6 @@ nspace:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
       URL: ${ROUTE_CONTEXT}/config
-      cache:
-        expires: 5
-        expiresAfter: write
-    md:
-      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
-      key: ${API_KEY}
-      URL: ${ROUTE_CONTEXT}/md
       cache:
         expires: 5
         expiresAfter: write
@@ -150,14 +147,25 @@ nspace:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
       URL: ${ROUTE_CONTEXT}/hcm/time
-    hcm:
+    hcm-payroll:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
-      URL: ${ROUTE_CONTEXT}/hcm/generic
+      URL: ${ROUTE_CONTEXT}/hcm/payroll
+    recruiting:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      url: ${ROUTE_CONTEXT}/recruiting
     system:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
       url: ${ROUTE_CONTEXT}/system
+      cache:
+        expires: 5
+        expiresAfter: write
+    task-base:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/v2/task
       cache:
         expires: 5
         expiresAfter: write

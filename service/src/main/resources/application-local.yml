@@ -16,7 +16,7 @@ DATE_FORMAT: yyyy-MM-dd'T'HH:mm:ssZ
 TZ: Asia/Ho_Chi_Minh
 
 server:
-  port: 8097
+  port: 8087
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
@@ -27,8 +27,9 @@ spring:
   jackson:
     date-format: ${DATE_FORMAT}
     time-zone: ${TZ}
+    default-property-inclusion: non_null
   application:
-    name: hcm-generic
+    name: hcm-sd
   output:
     ansi:
       enabled: never
@@ -100,13 +101,17 @@ cache:
   expries: 5
   expireAfter: write
 nspace:
+  tenant:
+    default: true
+  scheduleTopic: hcm-sd-schedule
+  sync-service: md-service
   token: 1
   policy: false
   cache:
     config: ${REDIS_CONFIG}
     expires: 0
     expireAfter: write
-  application: hcm_sd_service
+  application: hcm-sd
   hcm_sd_topic : hcm_sd_service_local
   service:
     task:
@@ -128,17 +133,12 @@ nspace:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
       URL: ${ROUTE_CONTEXT}/notice
+      mail-username: ndu6_plugon@ngs.com.vn
+      mail-password: Cutit@1234567
     config:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
       URL: ${ROUTE_CONTEXT}/config
-      cache:
-        expires: 5
-        expiresAfter: write
-    md:
-      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
-      key: ${API_KEY}
-      URL: ${ROUTE_CONTEXT}/md
       cache:
         expires: 5
         expiresAfter: write
@@ -167,7 +167,14 @@ nspace:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
       URL: ${ROUTE_CONTEXT}/hcm/time
-      #URL: http://localhost:8093
+    hcm-payroll:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/hcm/payroll
+    recruiting:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      url: ${ROUTE_CONTEXT}/recruiting
     system:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
@@ -175,8 +182,10 @@ nspace:
       cache:
         expires: 5
         expiresAfter: write
-    hcm:
+    task-base:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}
-      URL: ${ROUTE_CONTEXT}/hcm/generic
-      #URL: http://localhost:8087
+      URL: ${ROUTE_CONTEXT}/v2/task
+      cache:
+        expires: 5
+        expiresAfter: write

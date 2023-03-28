@@ -1,0 +1,83 @@
+stages:
+  - dev-deploy
+  - qas-deploy
+  - prod-deploy
+  - pvn-uat
+  - sicix-deploy
+  - newdev-deploy
+
+dev-deploy:
+  stage: dev-deploy
+  tags:
+    - xdp-be
+  script:
+    - gradle build
+    - docker build -t registry.xdp.vn:5000/hcm-sd-service:1.0.0 --rm=true  -f Dockerfile service/
+    - docker push registry.xdp.vn:5000/hcm-sd-service:1.0.0
+    - kubectl -n be-hcm-basic rollout restart deployment hcm-sd-service
+  only:
+    - dev
+
+newdev-deploy:
+  stage: dev-deploy
+  tags:
+    - xdp-be
+  script:
+    - gradle build
+    - docker build -t registry.xdp.vn:5000/hcm-sd-service:1.0.0 --rm=true  -f Dockerfile service/
+    - docker push registry.xdp.vn:5000/hcm-sd-service:1.0.0
+    - kubectl -n be-hcm-basic rollout restart deployment hcm-sd-service
+  only:
+    - newdev
+
+qas-deploy:
+  stage: qas-deploy
+  tags:
+    - xdp-be
+  script:
+    - gradle build
+    - docker build -t registry.xdp.vn:5000/hcm-sd-service:qas-1.0.0 --rm=true  -f Dockerfile service/
+    - docker push registry.xdp.vn:5000/hcm-sd-service:qas-1.0.0
+  only:
+    - qas
+  except:
+    - dev
+
+prod-deploy:
+  stage: prod-deploy
+  tags:
+    - xdp-be
+  #when: manual
+  script:
+    - gradle build
+    - docker build -t registry.xdp.vn:5000/hcm-sd-service:$CI_COMMIT_TAG --rm=true  -f Dockerfile service/
+    - docker push registry.xdp.vn:5000/hcm-sd-service:$CI_COMMIT_TAG
+  only:
+    - /^prod-[0-9]+(?:.[0-9]+)+(?:.[0-9]+)+$/
+  except:
+    - qas
+
+pvn-uat:
+  stage: pvn-uat
+  tags:
+    - xdp-be
+  #when: manual
+  script:
+    - gradle build
+    - docker build -t plugonacr.azurecr.io/hcm-sd-service:pvn-uat-1.0.0 --rm=true  -f Dockerfile service/
+    - docker push plugonacr.azurecr.io/hcm-sd-service:pvn-uat-1.0.0
+  only:
+    - pvn-uat
+
+sicix-deploy:
+  stage: sicix-deploy
+  tags:
+    - xdp-be
+  script:
+    - gradle build
+    - docker build -t plugonacr.azurecr.io/hcm-sd-service:$CI_COMMIT_TAG --rm=true  -f Dockerfile service/
+    - docker push plugonacr.azurecr.io/hcm-sd-service:$CI_COMMIT_TAG
+  only:
+    - /^sicix-[0-9]+(?:.[0-9]+)+(?:.[0-9]+)+$/
+  except:
+    - qas

@@ -1,1 +1,1 @@
-CREATE SCHEMA IF NOT EXISTS hcm_sd_service;
+CREATE SCHEMA IF NOT EXISTS ${db_schema};

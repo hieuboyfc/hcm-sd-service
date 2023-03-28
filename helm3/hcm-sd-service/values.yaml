@@ -1,4 +1,4 @@
-namespace: be-hcm-sd
+namespace: be-hcm-basic
 replicaCount: 1
 appName: hcm-sd-service
 instance: sicix
@@ -30,13 +30,13 @@ container:
     tcpSocket:
       port: {{ .Values.service.port }}
     timeoutSeconds: 2
-  resources: {}
+  resources: { }
 
 configMap:
   files:
     application:
       enable: false
-      name: hcm-sd-service
+      name: hcm-sd
       key: application.yml
       path: config/application.yml
       mountPath: /ngs/config/application.yml
@@ -46,7 +46,7 @@ database:
   name: nspace
   address: 172.16.101.39
   port: 5432
-  schema: hcm-sd-service
+  schema: hcm_sd_service
   username: xdp
   password: gjEyCJRruMz28kw96OWXy5JBN9pOROXT
 
@@ -63,7 +63,7 @@ service:
   type: ClusterIP
   port: 8080
 
-imagePullSecrets: []
+imagePullSecrets: [ ]
 nameOverride: ""
 fullnameOverride: ""
 
@@ -71,22 +71,22 @@ serviceAccount:
   # Specifies whether a service account should be created
   create: true
   # Annotations to add to the service account
-  annotations: {}
+  annotations: { }
   # The name of the service account to use.
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
-podAnnotations: {}
+podAnnotations: { }
 
-podSecurityContext: {}
+podSecurityContext: { }
 # fsGroup: 2000
 
-securityContext: {}
+securityContext: { }
   # capabilities:
   #   drop:
   #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
 # runAsUser: 1000
 
 autoscaling:
@@ -97,9 +97,9 @@ autoscaling:
   targetMemoryUtilizationPercentage: 90
 podAntiAffinity:
   enabled: true
-nodeSelector: {}
+nodeSelector: { }
 
-tolerations: []
+tolerations: [ ]
 
 affinity:
   podAntiAffinity:

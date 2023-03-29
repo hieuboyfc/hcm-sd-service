@@ -77,7 +77,7 @@ public class CareerPathServiceImpl implements CareerPathService {
                         .filter(o -> o.getCareerPathId().equals(item.getId()))
                         .collect(Collectors.toList());
                 if (dtos.isEmpty()) return;
-                getDataDetail(careerPathFlowDTOS, item, positionDTOS, "search");
+                getDataDetail(dtos, item, positionDTOS, "search");
             });
         }
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());
@@ -232,9 +232,8 @@ public class CareerPathServiceImpl implements CareerPathService {
                     .map(CareerPathFlowDTO::getCareerPathId)
                     .collect(Collectors.toList());
             refreshCareerPathFlowEmp(cid, uid, careerPathFlowDTOS, careerPathFlowIds, positionDTOS);
+            getDataDetail(careerPathFlowDTOS, careerPathDTO, positionDTOS, "refresh");
         }
-
-        getDataDetail(careerPathFlowDTOS, careerPathDTO, positionDTOS, "refresh");
         return careerPathDTO;
     }
 

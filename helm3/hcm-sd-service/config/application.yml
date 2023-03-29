@@ -143,6 +143,10 @@ nspace:
     request:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       url: ${ROUTE_CONTEXT}/wf/request
+    hcm:
+      headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
+      key: ${API_KEY}
+      URL: ${ROUTE_CONTEXT}/hcm/generic
     hcm-time:
       headers: '{"key":"${API_KEY}","cid":0,"uid":"system"}'
       key: ${API_KEY}

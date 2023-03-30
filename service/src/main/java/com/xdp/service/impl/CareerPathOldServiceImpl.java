@@ -1,29 +1,29 @@
 package com.xdp.service.impl;
 
-import com.xdp.dto.CareerPathDTO;
-import com.xdp.dto.CareerPathFlowDTO;
 import com.xdp.dto.EmployeeDTO;
-import com.xdp.dto.PositionDTO;
-import com.xdp.entities.CareerPath;
-import com.xdp.entities.CareerPathFlow;
-import com.xdp.entities.CareerPathFlowEmp;
-import com.xdp.entities.CareerPathFlowQualified;
 import com.xdp.lib.exceptions.BusinessException;
 import com.xdp.lib.utils.Constants;
-import com.xdp.repository.CareerPathFlowEmpRepo;
-import com.xdp.repository.CareerPathFlowQualifiedRepo;
-import com.xdp.repository.CareerPathFlowRepo;
-import com.xdp.repository.CareerPathRepo;
-import com.xdp.service.CareerPathService;
+import com.xdp.service.CareerPathOldService;
 import com.xdp.service.ExecuteHcmService;
-import com.xdp.utils.DateTimeUtils;
-import com.xdp.utils.SDUtils;
+import com.xdp.dto.CareerPathDTO;
+import com.xdp.dto.CareerPathFlowDTO;
+import com.xdp.dto.PositionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import com.xdp.entities.CareerPath;
+import com.xdp.entities.CareerPathFlow;
+import com.xdp.entities.CareerPathFlowEmp;
+import com.xdp.entities.CareerPathFlowQualified;
+import com.xdp.repository.CareerPathFlowEmpRepo;
+import com.xdp.repository.CareerPathFlowQualifiedRepo;
+import com.xdp.repository.CareerPathFlowRepo;
+import com.xdp.repository.CareerPathRepo;
+import com.xdp.utils.DateTimeUtils;
+import com.xdp.utils.SDUtils;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CareerPathServiceImpl implements CareerPathService {
+public class CareerPathOldServiceImpl implements CareerPathOldService {
 
     private final CareerPathRepo repo;
     private final CareerPathFlowRepo cpFlowRepo;
@@ -57,9 +57,9 @@ public class CareerPathServiceImpl implements CareerPathService {
             dto.setStatus(-1);
         }
         if (dto.getSearch() != null) {
-            search = SDUtils.Symbol.PERCENT + dto.getSearch() + SDUtils.Symbol.PERCENT;
+            search = "%" + dto.getSearch() + "%";
         } else {
-            search = SDUtils.Symbol.PERCENT_X2;
+            search = "%%";
         }
         Page<CareerPath> listPages = repo.search(
                 cid, dto.getStatus(), dto.getOrgId(), dto.getStartDate(), dto.getEndDate(), search, pageable
@@ -70,14 +70,14 @@ public class CareerPathServiceImpl implements CareerPathService {
         List<CareerPathFlow> careerPathFlows = cpFlowRepo.findAllByCompanyIdAndCareerPathIdIn(cid, ids);
         List<CareerPathFlowDTO> careerPathFlowDTOS = CareerPathFlow.toDTOs(careerPathFlows);
         if (!careerPathFlowDTOS.isEmpty()) {
-            List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, careerPathFlowDTOS, SDUtils.NameMethod.SEARCH);
+            List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, careerPathFlowDTOS, "search");
             listDTOs.forEach(item -> {
                 List<CareerPathFlowDTO> dtos = careerPathFlowDTOS
                         .stream()
                         .filter(o -> o.getCareerPathId().equals(item.getId()))
                         .collect(Collectors.toList());
                 if (dtos.isEmpty()) return;
-                getDataDetail(dtos, item, positionDTOS);
+                getDataDetail(dtos, item, positionDTOS, "search");
             });
         }
         return new PageImpl<>(listDTOs, pageable, listPages.getTotalElements());
@@ -87,8 +87,8 @@ public class CareerPathServiceImpl implements CareerPathService {
     @Transactional
     public CareerPathDTO create(Long cid, String uid, CareerPathDTO dto) {
         CareerPathDTO dtoData = new CareerPathDTO();
-        CareerPath entity = validateInput(cid, dto, false);
-        if (entity.getId() == null) {
+        CareerPath entity = validateInput(cid, uid, dto, false, "create");
+        if (entity == null) {
             entity = CareerPath.of(cid, dto);
             entity.setCompanyId(cid);
             entity.setCreateBy(uid);
@@ -104,17 +104,16 @@ public class CareerPathServiceImpl implements CareerPathService {
             for (CareerPathFlowDTO item : dto.getCareerPathFlowDTOS()) {
                 List<String> duplicateCodes = new ArrayList<>();
                 getDataFromChildren(cid, uid, 0L, entity.getId(), SDUtils.Symbol.EMPTY, SDUtils.Symbol.EMPTY,
-                        level, item, duplicateCodes, item.getChildren(), careerPathFlows, new ArrayList<>(),
-                        empIds, qualifiedIds, SDUtils.NameMethod.CREATE);
+                        level, item, duplicateCodes, item.getChildren(), careerPathFlows, empIds, qualifiedIds, "create");
             }
         }
         if (!careerPathFlows.isEmpty()) {
-            validateInput(careerPathFlows);
+            validateInput(careerPathFlows, "create");
             cpFlowRepo.saveAll(careerPathFlows);
-            createCareerPathFlowEmpAndQualified(cid, uid, empIds, qualifiedIds);
+            createCareerPathFlowEmpAndQualified(cid, uid, empIds, qualifiedIds, "create");
             List<CareerPathFlowDTO> careerPathFlowDTOS = CareerPathFlow.toDTOs(careerPathFlows);
-            List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, careerPathFlowDTOS, SDUtils.NameMethod.CREATE);
-            getDataDetail(careerPathFlowDTOS, dtoData, positionDTOS);
+            List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, careerPathFlowDTOS, "create");
+            getDataDetail(careerPathFlowDTOS, dtoData, positionDTOS, "create");
         }
         return dtoData;
     }
@@ -123,8 +122,8 @@ public class CareerPathServiceImpl implements CareerPathService {
     @Transactional
     public CareerPathDTO update(Long cid, String uid, CareerPathDTO dto) {
         CareerPathDTO dtoData = new CareerPathDTO();
-        CareerPath entity = validateInput(cid, dto, true);
-        if (entity.getId() != null) {
+        CareerPath entity = validateInput(cid, uid, dto, true, "update");
+        if (entity != null) {
             entity.setCode(dto.getCode());
             entity.setName(dto.getName());
             entity.setOrgId(dto.getOrgId());
@@ -135,42 +134,9 @@ public class CareerPathServiceImpl implements CareerPathService {
             dtoData = CareerPath.toDTO(entity);
             dto.setId(dtoData.getId());
         }
-
-        Map<Long, List<Long>> empIds = new HashMap<>();
-        Map<Long, List<Long>> qualifiedIds = new HashMap<>();
         List<CareerPathFlow> careerPathFlows = cpFlowRepo.findAllByCompanyIdAndCareerPathIdOrderByLevelDesc(cid, dto.getId());
-        List<CareerPathFlow> updateCareerPathFlows = new ArrayList<>();
-        if (!dto.getCareerPathFlowDTOS().isEmpty()) {
-            Integer level = 0;
-            for (CareerPathFlowDTO item : dto.getCareerPathFlowDTOS()) {
-                List<String> duplicateCodes = new ArrayList<>();
-                getDataFromChildren(cid, uid, 0L, dtoData.getId(), SDUtils.Symbol.EMPTY, SDUtils.Symbol.EMPTY,
-                        level, item, duplicateCodes, item.getChildren(), careerPathFlows, updateCareerPathFlows,
-                        empIds, qualifiedIds, SDUtils.NameMethod.UPDATE);
-            }
-        }
-        if (!updateCareerPathFlows.isEmpty()) {
-            List<CareerPathFlow> deleteCareerPathFlows = new ArrayList<>();
-            List<Long> deleteIds = new ArrayList<>();
-            List<Long> ids = updateCareerPathFlows.stream().map(CareerPathFlow::getId).collect(Collectors.toList());
-            if (!careerPathFlows.isEmpty()) {
-                for (CareerPathFlow item : careerPathFlows) {
-                    if (!ids.contains(item.getId())) {
-                        deleteCareerPathFlows.add(item);
-                        deleteIds.add(item.getId());
-                    }
-                }
-            }
-            cpFlowRepo.deleteAll(deleteCareerPathFlows);
-
-            List<CareerPathFlowEmp> careerPathFlowEmps = cpFlowEmpRepo.findAllByCompanyIdAndCareerPathFlowIdIn(cid, deleteIds);
-            cpFlowEmpRepo.deleteAll(careerPathFlowEmps);
-
-            List<CareerPathFlowQualified> careerPathFlowQualifieds = cpFlowQualifiedRepo.findAllByCompanyIdAndCareerPathFlowIdIn(cid, deleteIds);
-            cpFlowQualifiedRepo.deleteAll(careerPathFlowQualifieds);
-
-            cpFlowRepo.saveAll(updateCareerPathFlows);
-        }
+        deleteCareerPathFlow(cid, dto, careerPathFlows);
+        updateCareerPathFlow(cid, uid, dto, careerPathFlows);
         CareerPathDTO careerPathFlowDTO = getDetail(cid, uid, dto.getId());
         dtoData.setCareerPathFlowDTOS(careerPathFlowDTO.getCareerPathFlowDTOS());
         return dtoData;
@@ -180,11 +146,11 @@ public class CareerPathServiceImpl implements CareerPathService {
     @Transactional
     public void delete(Long cid, String uid, List<Long> ids) {
         if (ids.isEmpty()) {
-            throw new BusinessException(SDUtils.LanguageMessage.REQUIRED_FIELD);
+            throw new BusinessException("required-field-null");
         }
         List<CareerPath> careerPaths = repo.findAllByCompanyIdAndIdIn(cid, ids);
         if (careerPaths.isEmpty()) {
-            throw new BusinessException(SDUtils.LanguageMessage.CareerPath.NOT_FOUND);
+            throw new BusinessException("sd-career-path-not-found");
         }
         careerPaths.forEach(item -> {
             item.setUpdateBy(uid);
@@ -225,14 +191,14 @@ public class CareerPathServiceImpl implements CareerPathService {
     @Override
     @Transactional
     public CareerPathDTO refresh(Long cid, String uid, Long id) {
-        List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, null, SDUtils.NameMethod.REFRESH);
+        List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, null, "refresh");
         CareerPathDTO careerPathDTO = validateDataDetail(cid, id);
         List<CareerPathFlow> careerPathFlows = new ArrayList<>();
         if (careerPathDTO.getId() != null) {
             careerPathFlows = cpFlowRepo.findAllByCompanyIdAndCareerPathId(cid, careerPathDTO.getId());
         }
         if (careerPathFlows.isEmpty()) {
-            throw new BusinessException(SDUtils.LanguageMessage.CareerPathFlow.NOT_FOUND);
+            throw new BusinessException("sd-career-path-flow-not-found");
         }
 
         int totalRecordChange = 0;
@@ -242,16 +208,17 @@ public class CareerPathServiceImpl implements CareerPathService {
                     .filter(o -> o.getCode().equals(item.getCode()) && o.getId().equals(item.getPositionId()))
                     .findFirst()
                     .orElse(null);
-            if (positionDTO != null
-                    && (!item.getCode().equals(positionDTO.getCode())
-                    || item.getName().equals(positionDTO.getName())
-                    || !item.getStatus().equals(positionDTO.getStatus()))) {
-                item.setCode(positionDTO.getCode());
-                item.setName(positionDTO.getName());
-                item.setStatus(positionDTO.getStatus());
-                String pathName = item.getPathName().replace(item.getName(), positionDTO.getName());
-                item.setPathName(pathName);
-                totalRecordChange += 1;
+            if (positionDTO != null) {
+                if (!item.getCode().equals(positionDTO.getCode())
+                        || item.getName().equals(positionDTO.getName())
+                        || !item.getStatus().equals(positionDTO.getStatus())) {
+                    item.setCode(positionDTO.getCode());
+                    item.setName(positionDTO.getName());
+                    item.setStatus(positionDTO.getStatus());
+                    String pathName = item.getPathName().replace(item.getName(), positionDTO.getName());
+                    item.setPathName(pathName);
+                    totalRecordChange += 1;
+                }
             }
         }
         if (totalRecordChange > 0) {
@@ -265,7 +232,7 @@ public class CareerPathServiceImpl implements CareerPathService {
                     .map(CareerPathFlowDTO::getCareerPathId)
                     .collect(Collectors.toList());
             refreshCareerPathFlowEmp(cid, uid, careerPathFlowDTOS, careerPathFlowIds, positionDTOS);
-            getDataDetail(careerPathFlowDTOS, careerPathDTO, positionDTOS);
+            getDataDetail(careerPathFlowDTOS, careerPathDTO, positionDTOS, "refresh");
         }
         return careerPathDTO;
     }
@@ -278,16 +245,16 @@ public class CareerPathServiceImpl implements CareerPathService {
             careerPathFlows = cpFlowRepo.findAllByCompanyIdAndCareerPathId(cid, careerPathDTO.getId());
         }
         if (careerPathFlows.isEmpty()) {
-            throw new BusinessException(SDUtils.LanguageMessage.CareerPathFlow.NOT_FOUND);
+            throw new BusinessException("sd-career-path-flow-not-found");
         }
         List<CareerPathFlowDTO> careerPathFlowDTOS = CareerPathFlow.toDTOs(careerPathFlows);
-        List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, careerPathFlowDTOS, SDUtils.NameMethod.GET_DETAIL);
-        getDataDetail(careerPathFlowDTOS, careerPathDTO, positionDTOS);
+        List<PositionDTO> positionDTOS = getPositionDTOs(cid, uid, careerPathFlowDTOS, "getDetail");
+        getDataDetail(careerPathFlowDTOS, careerPathDTO, positionDTOS, "getDetail");
         return careerPathDTO;
     }
 
     private void getDataDetail(List<CareerPathFlowDTO> careerPathFlowDTOS, CareerPathDTO careerPathDTO,
-                               List<PositionDTO> positionDTOS) {
+                               List<PositionDTO> positionDTOS, String type) {
         Map<Long, List<CareerPathFlowDTO>> mapTemp = careerPathFlowDTOS.stream()
                 .collect(Collectors.groupingBy(e -> Optional.ofNullable(e.getParentId()).orElse(0L)));
         Integer level = 0;
@@ -311,9 +278,9 @@ public class CareerPathServiceImpl implements CareerPathService {
                 listDTOs.add(getDataChildren(item.getId(), item, mapTemp, level, totalStep, positionDTOS));
             }
         }
-        /*if (!listDTOs.isEmpty()) {
-            dto.setExpanded(true); // Expanded để ở đây mới đúng nhưng FE muốn chỗ nào Expanded cũng bằng True
-        }*/
+        if (!listDTOs.isEmpty()) {
+            dto.setExpanded(true);
+        }
         if (!positionDTOS.isEmpty() && !SDUtils.Symbol.EMPTY.equals(dto.getCode())) {
             positionDTOS.stream()
                     .filter(o -> o.getCode().equals(dto.getCode()) && o.getId().equals(dto.getPositionId()))
@@ -324,7 +291,6 @@ public class CareerPathServiceImpl implements CareerPathService {
                     });
         }
         dto.setChildren(listDTOs);
-        dto.setExpanded(true);
         return dto;
     }
 
@@ -332,52 +298,32 @@ public class CareerPathServiceImpl implements CareerPathService {
     void getDataFromChildren(Long cid, String uid, Long parentId, Long careerPathId, String path,
                              String pathName, Integer level, CareerPathFlowDTO dto, List<String> duplicateCodes,
                              List<CareerPathFlowDTO> dtos, List<CareerPathFlow> careerPathFlows,
-                             List<CareerPathFlow> updateCareerPathFlows, Map<Long, List<Long>> empIds,
-                             Map<Long, List<Long>> qualifiedIds, String type) {
+                             Map<Long, List<Long>> empIds, Map<Long, List<Long>> qualifiedIds, String type) {
         if (dto.getCode().length() > SDUtils.Number.N8) {
-            throw new BusinessException(SDUtils.Code.N5000, SDUtils.LanguageMessage.CareerPathFlow.CODE_EXCEED_THE_CHARACTER,
+            throw new BusinessException("5000", "sd-career-path-flow-code-exceed-the-character",
                     dto.getCode(), dto.getName(), SDUtils.Number.N8);
         }
         if (duplicateCodes.contains(dto.getCode())) {
-            throw new BusinessException(SDUtils.LanguageMessage.CareerPathFlow.POSITION_EXIST);
+            throw new BusinessException("sd-career-path-flow-position-exist");
         }
         duplicateCodes.add(dto.getCode());
 
         level += 1;
-        CareerPathFlow entity;
-        List<Long> employeeIds;
-        List<Long> qualifitionIds;
-        if (SDUtils.NameMethod.UPDATE.equalsIgnoreCase(type)) {
-            entity = careerPathFlows
-                    .stream()
-                    .filter(o -> (o.getId() != null && o.getId().equals(dto.getId()))
-                            && (o.getParentId() != null && o.getParentId().equals(dto.getParentId())))
-                    .findFirst()
-                    .orElse(new CareerPathFlow());
-            entity.setCode(dto.getCode());
-            entity.setName(dto.getName());
-            entity.setUpdateBy(uid);
-
-            employeeIds = dto.getEmployeeDTOS().stream().map(EmployeeDTO::getId).collect(Collectors.toList());
-            qualifitionIds = new ArrayList<>(); // Phần này chờ bên KNL làm xong mới lấy được dữ liệu
-        } else {
-            employeeIds = dto.getEmpIds();
-            qualifitionIds = dto.getQualifiedIds();
-            entity = CareerPathFlow.of(cid, dto);
-        }
+        CareerPathFlow entity = CareerPathFlow.of(cid, dto);
         entity.setCareerPathId(careerPathId);
         entity.setLevel(level);
         entity.setParentId(parentId);
-        if (entity.getId() == null) {
-            entity.setPositionId(dto.getPositionId());
-            entity.setCreateBy(uid);
-        } else {
-            entity.setUpdateBy(uid);
-        }
+        entity.setCreateBy(uid);
+        entity.setUpdateBy(uid);
         cpFlowRepo.save(entity);
 
-        empIds.put(entity.getId(), employeeIds);
-        qualifiedIds.put(entity.getId(), qualifitionIds);
+        if (!dto.getEmpIds().isEmpty()) {
+            empIds.put(entity.getId(), dto.getEmpIds());
+        }
+
+        if (!dto.getQualifiedIds().isEmpty()) {
+            qualifiedIds.put(entity.getId(), dto.getQualifiedIds());
+        }
 
         String textPath = getPathAndName(type, path, String.valueOf(entity.getId()), SDUtils.Symbol.DOT);
         entity.setPath(textPath);
@@ -387,46 +333,148 @@ public class CareerPathServiceImpl implements CareerPathService {
 
         for (CareerPathFlowDTO item : dtos) {
             getDataFromChildren(
-                    cid, uid, entity.getId(), careerPathId, textPath, textPathName, level, item, duplicateCodes,
-                    item.getChildren(), careerPathFlows, updateCareerPathFlows, empIds, qualifiedIds, type
+                    cid, uid, entity.getId(), careerPathId, textPath, textPathName, level,
+                    item, duplicateCodes, item.getChildren(), careerPathFlows, empIds, qualifiedIds, type
             );
         }
-        if (SDUtils.NameMethod.UPDATE.equalsIgnoreCase(type)) {
-            updateCareerPathFlows.add(entity);
-        } else {
-            careerPathFlows.add(entity);
+        careerPathFlows.add(entity);
+    }
+
+    @Transactional
+    void deleteCareerPathFlow(Long cid, CareerPathDTO dto, List<CareerPathFlow> careerPathFlows) {
+        if (!dto.getDeleteCareerPathFlowDTOs().isEmpty()) {
+            List<CareerPathFlow> deleteItems = new ArrayList<>();
+            try {
+                List<Long> ids = dto.getDeleteCareerPathFlowDTOs()
+                        .stream()
+                        .map(o -> Long.valueOf(o.get("id").toString()))
+                        .collect(Collectors.toList());
+                List<Long> parentIds = dto.getDeleteCareerPathFlowDTOs()
+                        .stream()
+                        .map(o -> Long.valueOf(o.get("parentId").toString()))
+                        .collect(Collectors.toList());
+                List<Long> parents = new ArrayList<>();
+                for (CareerPathFlow item : careerPathFlows) {
+                    if (ids.contains(item.getId()) && parentIds.contains(item.getParentId())) {
+                        parents.add(item.getId());
+                        deleteItems.add(item);
+                        continue;
+                    }
+                    if (!parents.isEmpty() && parents.contains(item.getParentId())) {
+                        deleteItems.add(item);
+                    }
+                }
+
+                if (!deleteItems.isEmpty()) {
+                    cpFlowRepo.deleteAll(deleteItems);
+                }
+
+                List<CareerPathFlowEmp> careerPathFlowEmps = cpFlowEmpRepo.findAllByCompanyIdAndCareerPathFlowIdIn(cid, ids);
+                if (!careerPathFlowEmps.isEmpty()) {
+                    cpFlowEmpRepo.deleteAll(careerPathFlowEmps);
+                }
+
+                List<CareerPathFlowQualified> careerPathFlowQualifieds = cpFlowQualifiedRepo.findAllByCompanyIdAndCareerPathFlowIdIn(cid, ids);
+                if (!careerPathFlowQualifieds.isEmpty()) {
+                    cpFlowQualifiedRepo.deleteAll(careerPathFlowQualifieds);
+                }
+
+            } catch (Exception e) {
+                System.out.println("Error -> Class: CareerPathServiceImpl.class | Method: deleteCareerPathFlow()");
+                e.printStackTrace();
+                throw new BusinessException("sd-career-path-flow-delete");
+            }
+        }
+    }
+
+    @Transactional
+    void updateCareerPathFlow(Long cid, String uid, CareerPathDTO dto, List<CareerPathFlow> listData) {
+        if (!dto.getUpdateCareerPathFlowDTOS().isEmpty()) {
+            List<CareerPathFlow> careerPathFlows = new ArrayList<>();
+            Map<Long, List<Long>> empIds = new HashMap<>();
+            Map<Long, List<Long>> qualifiedIds = new HashMap<>();
+            Integer level = 0;
+            String path = "";
+            String pathName = "";
+            for (CareerPathFlowDTO item : dto.getUpdateCareerPathFlowDTOS()) {
+                if (item.getParentId() == null) {
+                    throw new BusinessException("sd-career-path-flow-parent-id-not-found");
+                }
+
+                CareerPathFlow parent = listData
+                        .stream()
+                        .filter(o -> item.getParentId() != 0 && o.getId() != null && o.getId().equals(item.getParentId()))
+                        .findFirst()
+                        .orElse(null);
+                if (parent != null) {
+                    level = parent.getLevel();
+                    path = parent.getPath();
+                    pathName = parent.getPathName();
+                }
+
+                List<String> duplicateCodes = new ArrayList<>();
+                List<Long> parentIds = new ArrayList<>();
+                Long idFirst = item.getParentId();
+                for (CareerPathFlow o : listData) {
+                    if (idFirst != null && idFirst.equals(o.getId())) {
+                        idFirst = null;
+                        parentIds.add(o.getParentId());
+                        duplicateCodes.add(o.getCode());
+                        continue;
+                    }
+                    if (parentIds.contains(0L)) {
+                        continue;
+                    }
+                    if (parentIds.contains(o.getId()) || parentIds.contains(o.getParentId())) {
+                        parentIds.add(o.getParentId());
+                        duplicateCodes.add(o.getCode());
+                    }
+                }
+
+                getDataFromChildren(cid, uid, item.getParentId(), dto.getId(), path, pathName,
+                        level, item, duplicateCodes, item.getChildren(), careerPathFlows, empIds, qualifiedIds, "update");
+            }
+            if (!careerPathFlows.isEmpty()) {
+                validateInput(careerPathFlows, "update");
+                cpFlowRepo.saveAll(careerPathFlows);
+                createCareerPathFlowEmpAndQualified(cid, uid, empIds, qualifiedIds, "update");
+            }
         }
     }
 
     @Transactional
     void createCareerPathFlowEmpAndQualified(Long cid, String uid, Map<Long, List<Long>> empIds,
-                                             Map<Long, List<Long>> qualifiedIds) {
+                                             Map<Long, List<Long>> qualifiedIds, String type) {
         if (!empIds.isEmpty()) {
             List<CareerPathFlowEmp> listEntities = new ArrayList<>();
-            empIds.forEach((key, value) -> value.forEach(id -> {
-                CareerPathFlowEmp flowEmp = new CareerPathFlowEmp();
-                flowEmp.setCareerPathFlowId(key);
-                flowEmp.setEmpId(id);
-                flowEmp.setStatus(Constants.STATE_ACTIVE);
-                flowEmp.setCompanyId(cid);
-                flowEmp.setCreateBy(uid);
-                flowEmp.setUpdateBy(uid);
-                listEntities.add(flowEmp);
-            }));
+            empIds.forEach((key, value) -> {
+                value.forEach(id -> {
+                    CareerPathFlowEmp flowEmp = new CareerPathFlowEmp();
+                    flowEmp.setCareerPathFlowId(key);
+                    flowEmp.setEmpId(id);
+                    flowEmp.setStatus(Constants.STATE_ACTIVE);
+                    flowEmp.setCompanyId(cid);
+                    flowEmp.setCreateBy(uid);
+                    flowEmp.setUpdateBy(uid);
+                    listEntities.add(flowEmp);
+                });
+            });
             cpFlowEmpRepo.saveAll(listEntities);
         }
         if (!qualifiedIds.isEmpty()) {
             List<CareerPathFlowQualified> listEntities = new ArrayList<>();
-            qualifiedIds.forEach((key, value) -> value.forEach(id -> {
-                CareerPathFlowQualified flowQualified = new CareerPathFlowQualified();
-                flowQualified.setCareerPathFlowId(key);
-                flowQualified.setQualifiedId(id);
-                flowQualified.setStatus(Constants.STATE_ACTIVE);
-                flowQualified.setCompanyId(cid);
-                flowQualified.setCreateBy(uid);
-                flowQualified.setUpdateBy(uid);
-                listEntities.add(flowQualified);
-            }));
+            qualifiedIds.forEach((key, value) -> {
+                value.forEach(id -> {
+                    CareerPathFlowQualified flowQualified = new CareerPathFlowQualified();
+                    flowQualified.setCareerPathFlowId(key);
+                    flowQualified.setQualifiedId(id);
+                    flowQualified.setStatus(Constants.STATE_ACTIVE);
+                    flowQualified.setCompanyId(cid);
+                    flowQualified.setCreateBy(uid);
+                    flowQualified.setUpdateBy(uid);
+                    listEntities.add(flowQualified);
+                });
+            });
             cpFlowQualifiedRepo.saveAll(listEntities);
         }
     }
@@ -493,7 +541,8 @@ public class CareerPathServiceImpl implements CareerPathService {
                 empIds = cpFlowEmpRepo.getEmpIdInCareerPathFlow(cid, careerPathFlowIds);
             }
         }
-        List<String> states = SDUtils.State.Employee.DEFAULT;
+        // String[] states = {"official", "ctv", "working", "trainee", "unpaid", "quit", "maternity", "intern", "probation", "candidate"};
+        List<String> states = List.of("official", "ctv", "working", "trainee", "unpaid", "quit", "maternity", "intern", "probation", "candidate");
         Map<String, Object> filter = new HashMap<>();
         filter.put("type", "employee_position");
         filter.put("empIds", empIds);
@@ -504,44 +553,45 @@ public class CareerPathServiceImpl implements CareerPathService {
     private CareerPathDTO validateDataDetail(Long cid, Long id) {
         Optional<CareerPath> entityOptional = repo.findByCompanyIdAndId(cid, id);
         if (entityOptional.isEmpty()) {
-            throw new BusinessException(SDUtils.LanguageMessage.CareerPath.NOT_FOUND);
+            throw new BusinessException("sd-career-path-not-found");
         }
         CareerPath careerPath = entityOptional.get();
         return CareerPath.toDTO(careerPath);
     }
 
-    private CareerPath validateInput(Long cid, CareerPathDTO dto, boolean isEdit) {
+    private CareerPath validateInput(Long cid, String uid, CareerPathDTO dto, Boolean isEdit, String type) {
         if (!StringUtils.hasLength(dto.getCode()) || !StringUtils.hasLength(dto.getName())) {
-            throw new BusinessException(SDUtils.LanguageMessage.REQUIRED_FIELD);
+            throw new BusinessException("required-field-null");
         }
 
-        CareerPath entity = new CareerPath();
+        CareerPath entity = null;
         if (isEdit) {
             Long id = dto.getId() != null ? dto.getId() : -1L;
             entity = repo.findByCompanyIdAndId(cid, id).orElse(null);
             if (entity == null) {
-                throw new BusinessException(SDUtils.LanguageMessage.CareerPath.NOT_FOUND);
+                throw new BusinessException("sd-career-path-not-found");
             }
             if (!dto.getCode().equals(entity.getCode())) {
-                throw new BusinessException(SDUtils.LanguageMessage.CareerPath.CODE_NOT_CHANGE);
+                throw new BusinessException("sd-career-path-code-not-changed");
             }
         } else {
             List<CareerPath> list = repo.findAllByCompanyIdAndCode(cid, dto.getCode());
             if (list.size() > SDUtils.Number.N0) {
-                throw new BusinessException(SDUtils.LanguageMessage.CareerPath.EXIST);
+                throw new BusinessException("sd-career-path-exist");
             }
         }
         return entity;
     }
 
-    private void validateInput(List<CareerPathFlow> careerPathFlows) {
+    private void validateInput(List<CareerPathFlow> careerPathFlows, String type) {
         for (CareerPathFlow item : careerPathFlows) {
             if (item.getCareerPathId() == null) {
-                throw new BusinessException(SDUtils.LanguageMessage.CareerPath.IN_FLOW_NOT_FOUND);
+                throw new BusinessException("sd-career-path-in-flow-not-found");
             }
             if (item.getPositionId() == null || SDUtils.Symbol.EMPTY.equals(item.getCode())) {
-                throw new BusinessException(SDUtils.LanguageMessage.CareerPath.IN_FLOW_POSITION_CODE_NOT_FOUND);
+                throw new BusinessException("sd-career-path-in-flow-position-code-not-found");
             }
         }
     }
+
 }

@@ -1,8 +1,10 @@
 package com.xdp.api;
 
+import com.xdp.dto.CareerPathDTO;
 import com.xdp.lib.annotation.ActionMapping;
 import com.xdp.lib.utils.ResponseUtils;
 import com.xdp.policy.utils.Permission;
+import com.xdp.service.CareerPathService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -12,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.xdp.service.CareerPathService;
-import com.xdp.dto.CareerPathDTO;
 
 import java.util.List;
 

@@ -24,8 +24,8 @@ public class CareerPathFlowDTO {
     private String pathName;
     private String description;
     private CareerPathFlowDTO parent;
-    private List<Long> empIds;
-    private List<Long> qualifiedIds;
+    private List<Long> empIds = new ArrayList<>();
+    private List<Long> qualifiedIds = new ArrayList<>();
     private List<CareerPathFlowDTO> children = new ArrayList<>();
     private List<EmployeeDTO> employeeDTOS = new ArrayList<>();
     private Integer totalEmployee;

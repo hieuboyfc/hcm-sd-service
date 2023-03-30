@@ -370,6 +370,7 @@ public class CareerPathServiceImpl implements CareerPathService {
         entity.setParentId(parentId);
         if (entity.getId() == null) {
             entity.setPositionId(dto.getPositionId());
+            entity.setCompanyId(cid);
             entity.setCreateBy(uid);
         } else {
             entity.setUpdateBy(uid);

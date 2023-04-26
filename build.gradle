@@ -73,6 +73,9 @@ subprojects {
             dependency "org.awaitility:awaitility:${awaitilityVersion}"
             dependency "io.vertx:vertx-core:${vertxVersion}"
             dependency "org.hibernate:hibernate-envers:${hibernateEnvers}"
+
+            dependency "javax.mail:javax.mail-api:${mailApiVersion}"
+            dependency "com.sun.mail:javax.mail:${mailVersion}"
         }
     }
 
